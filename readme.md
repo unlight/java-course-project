@@ -1,7 +1,9 @@
 ABOUT
 -----
-Телефонная записная книжка
+Телефонная записная книжка.
 
 TODO
 ----
-Class icturePanel
+- editing
+- double click edits
+- sorting
