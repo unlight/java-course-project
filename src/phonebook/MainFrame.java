@@ -1,10 +1,9 @@
 package phonebook;
 
-import java.awt.Component;
+import javax.swing.UIManager;
 
 /**
- * @author
- * S
+ * @author S
  */
 public class MainFrame extends javax.swing.JFrame {
 
@@ -12,9 +11,12 @@ public class MainFrame extends javax.swing.JFrame {
 	  initComponents();
 	  initEvents();
     }
-    
+
     private void initEvents() {
 	  addEntryMenuItem.addActionListener(new AddEntryDialog(this, true));
+	  mainTable.setModel(new EntryTableModel());
+//	  mainTable.addMouseListener(null);
+	  
     }
 
     @SuppressWarnings("unchecked")
@@ -36,29 +38,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(640, 480));
 
-        mainTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Фамилия", "Имя", "Телефон", "Дата рождения"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         mainScrollPane.setViewportView(mainTable);
 
         fileMenu.setText("Файл");
@@ -106,35 +85,25 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-	  /* Set the Nimbus look and feel */
-	  //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-	   * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-	   */
-	  try {
-		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-		    if ("Windows".equals(info.getName())) {
-			  javax.swing.UIManager.setLookAndFeel(info.getClassName());
-			  break;
-		    }
-		}
-	  } catch (ClassNotFoundException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  } catch (InstantiationException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  } catch (IllegalAccessException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  }
-	  //</editor-fold>
 
-	  /* Create and display the form */
-	  java.awt.EventQueue.invokeLater(new Runnable() {
-		public void run() {
-		    new MainFrame().setVisible(true);
-		}
-	  });
+	  try {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	  } catch (Exception e) {
+		e.printStackTrace();
+	  }
+	  Application application = Application.getInstance();
+	  MainFrame frame = new MainFrame();
+	  try {
+		application.bootstrap();
+	  } catch (Exception e) {
+		application.handleException(e);
+	  }
+	  frame.setVisible(true);
+	  // Добавляем компоненты.
+//	  frame.setTitle(this.name + " " + version);
+//	  frame.pack();
+//	  frame.setVisible(true);
+//	  frame.addWindowListener(new ApplicationWindowListener(this));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -149,5 +118,4 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTable mainTable;
     private javax.swing.JMenuItem removeEntryMenuItem;
     // End of variables declaration//GEN-END:variables
-
 }

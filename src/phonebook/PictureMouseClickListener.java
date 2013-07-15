@@ -9,8 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author
- * S
+ * @author S
  */
 public class PictureMouseClickListener extends MouseAdapter {
 
@@ -19,7 +18,7 @@ public class PictureMouseClickListener extends MouseAdapter {
     public PictureMouseClickListener(AddEntryDialog owner) {
 	  this.owner = owner;
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
 	  JFileChooser pictureFileChooser = new JFileChooser();

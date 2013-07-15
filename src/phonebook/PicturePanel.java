@@ -17,18 +17,18 @@ public class PicturePanel extends JPanel {
     AddEntryDialog owner;
 
     public PicturePanel(AddEntryDialog owner) {
-        this.owner = owner;
+	  this.owner = owner;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        File pictureFile = owner.getPictureFile();
-        if (pictureFile != null) {
-            ImageIcon icon = new ImageIcon(pictureFile.getPath());
-            g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
-            setBorder(new LineBorder(Color.GRAY));
-        }
-        // ?: Почему постоянно вызывается paint() здесь.
+	  super.paintComponent(g);
+	  File pictureFile = owner.getPictureFile();
+	  if (pictureFile != null) {
+		ImageIcon icon = new ImageIcon(pictureFile.getPath());
+		g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
+		setBorder(new LineBorder(Color.GRAY));
+	  }
+	  // ?: Почему постоянно вызывается paint() здесь.
     }
 }

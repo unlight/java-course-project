@@ -1,4 +1,4 @@
-package phonebook;
+package utils;
 
 public class KeyValue {
 
@@ -7,12 +7,12 @@ public class KeyValue {
 
     public KeyValue() {
     }
-    
+
     public KeyValue(Object key, String value) {
 	  this.key = key;
 	  this.value = value;
     }
-    
+
     public KeyValue(Object key, Object value) {
 	  this(key, value.toString());
     }
@@ -20,7 +20,7 @@ public class KeyValue {
     public Object getKey() {
 	  return this.key;
     }
-    
+
     public String getKeyString() {
 	  return getKey().toString();
     }

@@ -3,8 +3,7 @@ package phonebook;
 import java.awt.Frame;
 
 /**
- * @author
- * S
+ * @author S
  */
 public class EditEntryDialog extends AddEntryDialog {
 
@@ -13,6 +12,4 @@ public class EditEntryDialog extends AddEntryDialog {
 	  setTitle("Редактировать");
 	  saveButton.setText("Сохранить");
     }
-    
-    
 }

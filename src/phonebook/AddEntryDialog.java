@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 import javax.swing.JDialog;
+import javax.swing.table.DefaultTableModel;
 import net.iharder.dnd.FileDrop;
 
 /**
@@ -16,26 +17,27 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     private File pictureFile;
 
     public AddEntryDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        initEvents();
+	  super(parent, modal);
+	  initComponents();
+	  initEvents();
     }
 
     protected HashMap<String, Object> getData() {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("FamilyName", familyNameTextField.getText());
-        hashMap.put("FirstName", firstNameTextField.getText());
-        hashMap.put("Phone", phoneNumberTextField.getText());
-        hashMap.put("BirthDate", birthDateField.getValue());
-        hashMap.put("Picture", pictureFile);
-        // new SimpleDateFormat("yyyy-MM-dd").format(datePanel.getDate());
-        return hashMap;
+	  HashMap<String, Object> hashMap = new HashMap<>();
+	  hashMap.put("FamilyName", familyNameTextField.getText());
+	  hashMap.put("FirstName", firstNameTextField.getText());
+	  hashMap.put("Phone", phoneNumberTextField.getText());
+	  hashMap.put("BirthDate", birthDateField.getValue());
+	  hashMap.put("Picture", pictureFile);
+	  hashMap.put("CategoryID", null);
+	  // new SimpleDateFormat("yyyy-MM-dd").format(datePanel.getDate());
+	  return hashMap;
     }
 
     private void initEvents() {
-        pictureMouseClickListener = new PictureMouseClickListener(this);
-        picturePanel.addMouseListener(pictureMouseClickListener);
-        new FileDrop(picturePanel, new FileDropListener(this));
+	  pictureMouseClickListener = new PictureMouseClickListener(this);
+	  picturePanel.addMouseListener(pictureMouseClickListener);
+	  new FileDrop(picturePanel, new FileDropListener(this));
     }
 
     @SuppressWarnings("unchecked")
@@ -160,7 +162,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+	  // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
@@ -178,21 +180,21 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        setVisible(true);
+	  setVisible(true);
     }
 
     /**
      * @return the pictureFile
      */
     public File getPictureFile() {
-        return pictureFile;
+	  return pictureFile;
     }
 
     /**
      * @param pictureFile the pictureFile to set
      */
     public void setPictureFile(File pictureFile) {
-        this.pictureFile = pictureFile;
-        picturePanel.repaint();
+	  this.pictureFile = pictureFile;
+	  picturePanel.repaint();
     }
 }
