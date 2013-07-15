@@ -10,10 +10,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
 	  initComponents();
-	  initMenuActionListeners();
+	  initEvents();
     }
     
-    private void initMenuActionListeners() {
+    private void initEvents() {
 	  addEntryMenuItem.addActionListener(new AddEntryDialog(this, true));
     }
 

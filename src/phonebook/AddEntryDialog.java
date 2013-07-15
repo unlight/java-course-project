@@ -1,25 +1,48 @@
 package phonebook;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFileChooser;
+import java.io.File;
+import java.util.HashMap;
+import javax.swing.JDialog;
 
 /**
  * @author
  * S
  */
-public class AddEntryDialog extends javax.swing.JDialog implements ActionListener {
-
+public class AddEntryDialog extends JDialog implements ActionListener {
+    
+    PictureMouseClickListener pictureMouseClickListener;
+    private File pictureFile;
+    
     public AddEntryDialog(java.awt.Frame parent, boolean modal) {
 	  super(parent, modal);
 	  initComponents();
+	  initEvents();
     }
-
+    
+    protected HashMap<String, Object> getData() {
+	  HashMap<String, Object> hashMap = new HashMap<>();
+	  hashMap.put("FamilyName", familyNameTextField.getText());
+	  hashMap.put("FirstName", firstNameTextField.getText());
+	  hashMap.put("Phone", phoneNumberTextField.getText());
+	  hashMap.put("BirthDate", birthDateField.getValue());
+	  hashMap.put("Picture", pictureFile);
+	  // .setText(new SimpleDateFormat("yyyy-MM-dd").format(datePanel.getDate()));
+	  return hashMap;
+    }
+    
+    private void initEvents() {
+	  pictureMouseClickListener = new PictureMouseClickListener(this);
+	  picturePanel.addMouseListener(pictureMouseClickListener);
+	  getData();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pictureFileChooser = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -54,21 +77,10 @@ public class AddEntryDialog extends javax.swing.JDialog implements ActionListene
             }
         });
 
-        familyNameTextField.setText("jTextField1");
-
-        firstNameTextField.setText("jTextField1");
-
-        phoneNumberTextField.setText("jTextField1");
-
         cancelButton.setText("Отмена");
 
         picturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Изображение"));
         picturePanel.setForeground(new java.awt.Color(204, 204, 204));
-        picturePanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                picturePanelMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout picturePanelLayout = new javax.swing.GroupLayout(picturePanel);
         picturePanel.setLayout(picturePanelLayout);
@@ -147,14 +159,8 @@ public class AddEntryDialog extends javax.swing.JDialog implements ActionListene
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+	  // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void picturePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_picturePanelMouseClicked
-//        pictureFileChooser = new JFileChooser
-    }//GEN-LAST:event_picturePanelMouseClicked
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JButton cancelButton;
@@ -165,14 +171,26 @@ public class AddEntryDialog extends javax.swing.JDialog implements ActionListene
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField phoneNumberTextField;
-    private javax.swing.JFileChooser pictureFileChooser;
     private javax.swing.JPanel picturePanel;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	  System.out.println(e);
 	  setVisible(true);
+    }
+
+    /**
+     * @return the pictureFile
+     */
+    public File getPictureFile() {
+	  return pictureFile;
+    }
+
+    /**
+     * @param pictureFile the pictureFile to set
+     */
+    public void setPictureFile(File pictureFile) {
+	  this.pictureFile = pictureFile;
     }
 }
