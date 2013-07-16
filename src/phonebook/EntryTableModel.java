@@ -1,70 +1,73 @@
 package phonebook;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Date;
 import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-import utils.KeyValue;
+import phonebook.entity.Entry;
 
 /**
  * @author S
  */
-public class EntryTableModel<Entry> implements TableModel {
-  
+public class EntryTableModel implements TableModel {
+
     EntryModel entryModel = new EntryModel();
-    String[] columnNames = new String[] {
-	  "Имя", "Фамилия", "Дата рождения"
+    String[] columnNames = new String[]{
+        "Имя", "Фамилия", "Дата рождения"
     };
-    String[] columnKeys = new String[] {
-	"FirstName", "LastName", "BirthDate"
+    String[] columnKeys = new String[]{
+        "FirstName", "LastName", "BirthDate"
     };
-    List<HashMap<String,Object>> dataList;
-    
+    Class<?>[] columnClasses = new Class<?>[]{
+        String.class, String.class, Date.class
+    };
+    List<Entry> dataList;
+
     public EntryTableModel() {
     }
-    
-    public List<HashMap<String,Object>> getDataList() {
-	  if (dataList == null) {
-		dataList = entryModel.get();
-	  }
-	  return dataList;
+
+    public List<Entry> getDataList() {
+        if (dataList == null) {
+            dataList = entryModel.get();
+        }
+        return dataList;
     }
 
     @Override
     public int getRowCount() {
-	  return entryModel.getCount();
+        return entryModel.getCount();
     }
 
     @Override
     public int getColumnCount() {
-	  return columnNames.length;
+        return columnNames.length;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-	  return columnNames[columnIndex];
+        return columnNames[columnIndex];
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-	  return String.class;
+        return columnClasses[columnIndex];
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-	  return false;
+        return false;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-	  String key = columnKeys[columnIndex];
-	  return getDataList().get(rowIndex).get(key);
+        String name = columnKeys[columnIndex];
+        Entry entry = (Entry) getDataList().get(rowIndex);
+        return entry.getProperty(name);
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-	  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

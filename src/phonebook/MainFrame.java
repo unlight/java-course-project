@@ -1,6 +1,7 @@
 package phonebook;
 
 import javax.swing.UIManager;
+import phonebook.entity.Entity;
 
 /**
  * @author S
@@ -15,8 +16,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void initEvents() {
 	  addEntryMenuItem.addActionListener(new AddEntryDialog(this, true));
 	  mainTable.setModel(new EntryTableModel());
-//	  mainTable.addMouseListener(null);
-	  
     }
 
     @SuppressWarnings("unchecked")

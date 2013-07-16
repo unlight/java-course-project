@@ -1,81 +1,47 @@
 package phonebook;
 
 import com.github.sqlbuilder.SelectQuery;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import utils.KeyValue;
+import phonebook.entity.Entity;
 import utils.SqlUtils;
 
 public class Model<T> {
 
     protected String name;
     protected String primaryKey;
+//    protected Class<T> classRef;
 
     public Model(String name) {
-	  this.name = name;
-	  this.primaryKey = name + "ID";
+        this.name = name;
+        this.primaryKey = name + "ID";
     }
 
-//    public T getById(int rowID) {
-//	  String query = new SelectQuery()
-//		    .addColumn("*")
-//		    .addFrom(name)
-//		    .addWhere(primaryKey + " = ?")
-//		    .toString();
-//	  List list = selectQuery(query, new Object[]{
-//		rowID
-//	  });
-//	  return T;
-//    }
-
-    public List getListById(int rowID) {
-	  String query = new SelectQuery()
-		    .addColumn("*")
-		    .addFrom(name)
-		    .addWhere(primaryKey + " = ?")
-		    .toString();
-	  List list = selectQuery(query, new Object[]{
-		rowID
-	  });
-	  return list;
+    public List<T> get() {
+        SelectQuery sql = new SelectQuery()
+                .addFrom(name);
+        ResultSet resultSet = SqlUtils.getResultSet(sql);
+        ArrayList result = new ArrayList();
+        if (resultSet != null) {
+            try {
+                while (resultSet.next()) {
+                    T row = (T) Class.forName("phonebook.entity." + name).newInstance();
+                    ((Entity)row).attachResultSet(resultSet);
+                    result.add(row);
+                }
+            } catch (Exception ex) {
+                Application.handleException(ex);
+            }
+        }
+        return result;
     }
-
-    public List<HashMap<String, Object>> get() {
-	  String query = new SelectQuery()
-		    .addFrom(name)
-		    .toString();
-	  return selectQuery(query);
-    }
-
-    public static List<HashMap<String, Object>> selectQuery(String query) {
-	  return selectQuery(query, new Object[]{});
-    }
-
-    public static List<HashMap<String, Object>> selectQuery(String query, Object[] values) {
-	  List list = null;
-	  try {
-		PreparedStatement preparedStatement = Application.connection().prepareStatement(query);
-		for (int i = 0; i < values.length; i++) {
-		    preparedStatement.setString(i, values[i].toString());
-		}
-		ResultSet executeQuery = preparedStatement.executeQuery();
-		list = SqlUtils.resultSetToArrayList(executeQuery);
-	  } catch (SQLException e) {
-		Application.handleException(e);
-	  }
-	  return list;
-    }
-
+ 
     public int getCount() {
-	  String query = new SelectQuery()
-		    .addColumn("count(*) as count")
-		    .addFrom(name)
-		    .toString();
-	  Object object = selectQuery(query, new Object[]{}).get(0).get("count");
-	  int result = Integer.parseInt(object.toString());
-	  return result;
+        SelectQuery sql = new SelectQuery()
+                .addColumn("count(*) as count")
+                .addFrom(name);
+        Object cell = SqlUtils.getCell(sql);
+        return Integer.parseInt(cell.toString());
     }
 }
