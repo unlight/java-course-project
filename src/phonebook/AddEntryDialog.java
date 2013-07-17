@@ -3,44 +3,54 @@ package phonebook;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.Date;
 import java.util.HashMap;
 import javax.swing.JDialog;
-import javax.swing.table.DefaultTableModel;
 import net.iharder.dnd.FileDrop;
+import phonebook.entity.Entry;
 
 /**
  * @author S
  */
 public class AddEntryDialog extends JDialog implements ActionListener {
 
-    PictureMouseClickListener pictureMouseClickListener;
-    private File pictureFile;
+	PictureMouseClickListener pictureMouseClickListener;
+	private File pictureFile;
+	private Entry data;
 
-    public AddEntryDialog(java.awt.Frame parent, boolean modal) {
-	  super(parent, modal);
-	  initComponents();
-	  initEvents();
-    }
+	public AddEntryDialog(java.awt.Frame parent, boolean modal) {
+		super(parent, modal);
+		initComponents();
+		initEvents();
+	}
 
-    protected HashMap<String, Object> getData() {
-	  HashMap<String, Object> hashMap = new HashMap<>();
-	  hashMap.put("FamilyName", familyNameTextField.getText());
-	  hashMap.put("FirstName", firstNameTextField.getText());
-	  hashMap.put("Phone", phoneNumberTextField.getText());
-	  hashMap.put("BirthDate", birthDateField.getValue());
-	  hashMap.put("Picture", pictureFile);
-	  hashMap.put("CategoryID", null);
-	  // new SimpleDateFormat("yyyy-MM-dd").format(datePanel.getDate());
-	  return hashMap;
-    }
+	protected void setData(Entry entry) {
+		lastNameTextField.setText(entry.LastName);
+		firstNameTextField.setText(entry.FirstName);
+		phoneNumberTextField.setText(entry.Phone);
+		birthDateField.setValue(entry.BirthDate);
+		// TODO: set Category id.
+	}
 
-    private void initEvents() {
-	  pictureMouseClickListener = new PictureMouseClickListener(this);
-	  picturePanel.addMouseListener(pictureMouseClickListener);
-	  new FileDrop(picturePanel, new FileDropListener(this));
-    }
+	protected Entry getData() {
+		data = new Entry();
+		data.LastName = lastNameTextField.getText();
+		data.FirstName = firstNameTextField.getText();
+		data.Phone = phoneNumberTextField.getText();
+		data.BirthDate = (Date) birthDateField.getValue();
+		// @todo: Picture
+//	  data.Picture = pictureFile;
+		data.CategoryID = null;
+		return data;
+	}
 
-    @SuppressWarnings("unchecked")
+	private void initEvents() {
+		pictureMouseClickListener = new PictureMouseClickListener(this);
+		picturePanel.addMouseListener(pictureMouseClickListener);
+		new FileDrop(picturePanel, new FileDropListener(this));
+	}
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -49,12 +59,12 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
-        familyNameTextField = new javax.swing.JTextField();
+        lastNameTextField = new javax.swing.JTextField();
         firstNameTextField = new javax.swing.JTextField();
         phoneNumberTextField = new javax.swing.JTextField();
         birthDateField = new net.sf.nachocalendar.components.DateField();
         cancelButton = new javax.swing.JButton();
-        picturePanel = new PicturePanel(this);
+        picturePanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Новая запись");
@@ -120,7 +130,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(familyNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -139,7 +149,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(familyNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(12, 12, 12)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,39 +172,39 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-	  // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JTextField familyNameTextField;
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField lastNameTextField;
     private javax.swing.JTextField phoneNumberTextField;
     private javax.swing.JPanel picturePanel;
     protected javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-	  setVisible(true);
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setVisible(true);
+	}
 
-    /**
-     * @return the pictureFile
-     */
-    public File getPictureFile() {
-	  return pictureFile;
-    }
+	/**
+	 * @return the pictureFile
+	 */
+	public File getPictureFile() {
+		return pictureFile;
+	}
 
-    /**
-     * @param pictureFile the pictureFile to set
-     */
-    public void setPictureFile(File pictureFile) {
-	  this.pictureFile = pictureFile;
-	  picturePanel.repaint();
-    }
+	/**
+	 * @param pictureFile the pictureFile to set
+	 */
+	public void setPictureFile(File pictureFile) {
+		this.pictureFile = pictureFile;
+		picturePanel.repaint();
+	}
 }

@@ -47,7 +47,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="familyNameTextField" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="lastNameTextField" min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -73,7 +73,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="familyNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lastNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -145,7 +145,7 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="familyNameTextField">
+    <Component class="javax.swing.JTextField" name="lastNameTextField">
     </Component>
     <Component class="javax.swing.JTextField" name="firstNameTextField">
     </Component>

@@ -9,7 +9,7 @@ import phonebook.Application;
  */
 public class Category extends Entity {
     
-    public int CategoryID;
+    public Integer CategoryID;
     public String Name;
 
     @Override

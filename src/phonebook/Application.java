@@ -15,7 +15,8 @@ public class Application {
 
     public static Application getInstance() {
 	  if (application == null) {
-		application = new Application();
+		  application = new Application();
+		  application.bootstrap();
 	  }
 	  return application;
     }

@@ -15,8 +15,9 @@ public class Structure {
 	  {
 		put("Entry", new String[]{
 		    "EntryID integer primary key autoincrement",
-		    "FirstName text not null",
-		    "LastName text not null",
+		    "FirstName text",
+		    "LastName text",
+		    "Phone text",
 		    "BirthDate text",
 		    "DateInserted text not null",
 		    "CategoryID integer constraint FK_Category_CategoryID references Category(CategoryID)"});

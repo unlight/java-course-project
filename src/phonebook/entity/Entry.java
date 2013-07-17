@@ -11,23 +11,24 @@ import phonebook.Application;
  */
 public class Entry extends Entity {
 
-    public int EntryID;
+    public Integer EntryID;
     public String FirstName;
     public String LastName;
+    public String Phone;
     public Date BirthDate;
-    public int CategoryID;
+    public Integer CategoryID;
 
     @Override
     public void attachResultSet(ResultSet set) {
-        try {
-            EntryID = set.getInt("EntryID");
-            FirstName = set.getString("FirstName");
-            LastName = set.getString("LastName");
-            BirthDate = set.getDate("BirthDate");
-            CategoryID = set.getInt("CategoryID");
-        } catch (SQLException ex) {
-            Application.handleException(ex);
-        }
+	  try {
+		EntryID = set.getInt("EntryID");
+		FirstName = set.getString("FirstName");
+		LastName = set.getString("LastName");
+		BirthDate = set.getDate("BirthDate");
+		Phone = set.getString("Phone");
+		CategoryID = set.getInt("CategoryID");
+	  } catch (SQLException ex) {
+		Application.handleException(ex);
+	  }
     }
-    
 }

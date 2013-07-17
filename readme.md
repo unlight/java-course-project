@@ -4,6 +4,8 @@ ABOUT
 
 TODO
 ----
+- editing select photo
+- adding (save to database)
+- select category
 - editing
-- double click edits
 - sorting
