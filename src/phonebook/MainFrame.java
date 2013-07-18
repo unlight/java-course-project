@@ -15,7 +15,7 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
 	private void initEvents() {
-		addEntryMenuItem.addActionListener(new AddEntryDialog(this, true));
+		addEntryMenuItem.addActionListener(new AddEntryDialog(this, false));
 		entryTable.setModel(new EntryTableModel());
 	}
 
@@ -103,13 +103,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_entryTableMouseClicked
 
     private void editEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEntryMenuItemActionPerformed
-		int rowID = entryTable.getEntityId();
+		int rowID = ((EntryTable) entryTable).getEntityId();
 		openEditWindow(rowID);
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
 	private void openEditWindow(int id) {
 		System.out.println(id);
-		new EditEntryDialog(id, this, true).setVisible(true);
+		new EditEntryDialog(id, this, false).setVisible(true);
 	}
 
 	public static void main(String args[]) {
@@ -120,6 +120,7 @@ public class MainFrame extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		MainFrame frame = new MainFrame();
+        application.frame = frame;
 		frame.setVisible(true);
 //	  frame.setTitle(this.name + " " + version);
 //	  frame.pack();
@@ -131,7 +132,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem addEntryMenuItem;
     private javax.swing.JMenuItem editEntryMenuItem;
     private javax.swing.JMenu entryMenu;
-    private EntryTable entryTable;
+    private javax.swing.JTable entryTable;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;

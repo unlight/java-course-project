@@ -1,6 +1,6 @@
 package phonebook;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;

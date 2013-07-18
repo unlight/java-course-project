@@ -44,11 +44,20 @@ public class UpdateQuery {
 		    .append(" SET ");
 
 	  for (Entry<String, String> entry : sets.entrySet()) {
+	  	String string = entry.getValue();
+	  	
+        if (string.equals("")) {
+            string = "null";
+        } else if (string.startsWith("@")) {
+            string = string.substring(1);
+        } else {
+            string = "'" + string + "'";
+        }
+
+	  	string = "'" + string + "'";
 		result.append(entry.getKey())
 			  .append(" = ")
-			  .append("'")
-			  .append(entry.getValue())
-			  .append("'");
+			  .append(string);
 	  }
 
 	  if (!wheres.isEmpty()) {

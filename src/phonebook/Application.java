@@ -3,6 +3,7 @@ package phonebook;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Application {
 
@@ -30,6 +31,7 @@ public class Application {
 		// Подключение.
 		Class.forName("org.sqlite.JDBC");
 		connection = DriverManager.getConnection("jdbc:sqlite:" + datafile);
+//        connection.setAutoCommit(false);
 	  } catch (Exception e) {
 		handleException(e);
 	  }
@@ -45,6 +47,8 @@ public class Application {
      */
     public static void handleException(Exception e) {
 	  e.printStackTrace();
+      Application app = getInstance();
+        JOptionPane.showMessageDialog(app.frame, e.getLocalizedMessage(), "Error Dialog", JOptionPane.ERROR_MESSAGE);
     }
 
     public void closeConnection() {

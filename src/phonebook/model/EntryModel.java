@@ -10,35 +10,36 @@ import utils.SqlUtils;
  */
 public class EntryModel extends Model<Entry> {
 
-	public EntryModel() {
-		super("Entry");
-	}
+    public EntryModel() {
+        super("Entry");
+    }
 
-	@Override
-	public Integer save(Entry entity) {
-		if (entity.EntryID == null) {
-			return this.insert(entity);
-		} else {
-			this.update(entity);
-			return entity.EntryID;
-		}
-	}
+    @Override
+    public Integer save(Entry entity) {
+        if (entity.EntryID == null) {
+            return this.insert(entity);
+        } else {
+            this.update(entity);
+            return entity.EntryID;
+        }
+    }
 
-	private Integer insert(Entry entity) {
-		InsertQuery query = new InsertQuery(name)
-				.columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID")
-				.values(entity.FirstName, entity.LastName, entity.Phone, entity.BirthDate, entity.CategoryID);
-		return SqlUtils.insert(query);
-	}
+    private Integer insert(Entry entity) {
+        InsertQuery query = new InsertQuery(name)
+                .columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID", "DateInserted", "DateUpdated")
+                .values(entity.FirstName, entity.LastName, entity.Phone, entity.BirthDate, entity.CategoryID, "@datetime('Now')", "@datetime('Now')");
+        return SqlUtils.insert(query);
+    }
 
-	private void update(Entry entity) {
-		UpdateQuery query = new UpdateQuery(name)
-				.set("FirstName", entity.FirstName)
-				.set("LastName", entity.LastName)
-				.set("Phone", entity.Phone)
-				.set("BirthDate", entity.BirthDate.toString())
-				.set("CategoryID", entity.CategoryID.toString())
-				.addWhere("EntryID = " + entity.EntryID);
-		SqlUtils.update(query);
-	}
+    private void update(Entry entity) {
+        UpdateQuery query = new UpdateQuery(name)
+                .set("FirstName", entity.FirstName)
+                .set("LastName", entity.LastName)
+                .set("Phone", entity.Phone)
+                .set("BirthDate", entity.BirthDate.toString())
+                .set("CategoryID", entity.CategoryID.toString())
+                .set("DateUpdated", "@datetime('Now')")
+                .addWhere("EntryID = " + entity.EntryID);
+        SqlUtils.update(query);
+    }
 }

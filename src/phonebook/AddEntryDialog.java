@@ -1,56 +1,60 @@
 package phonebook;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JDialog;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import net.iharder.dnd.FileDrop;
 import phonebook.entity.Entry;
+import phonebook.model.EntryModel;
 
 /**
  * @author S
  */
 public class AddEntryDialog extends JDialog implements ActionListener {
 
-	PictureMouseClickListener pictureMouseClickListener;
-	private File pictureFile;
-	private Entry data;
+    PictureMouseClickListener pictureMouseClickListener;
+    private File pictureFile;
+    private Entry data;
 
-	public AddEntryDialog(java.awt.Frame parent, boolean modal) {
-		super(parent, modal);
-		initComponents();
-		initEvents();
-	}
+    public AddEntryDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        initEvents();
+    }
 
-	protected void setData(Entry entry) {
-		lastNameTextField.setText(entry.LastName);
-		firstNameTextField.setText(entry.FirstName);
-		phoneNumberTextField.setText(entry.Phone);
-		birthDateField.setValue(entry.BirthDate);
-		// TODO: set Category id.
-	}
+    protected void setData(Entry entry) {
+        lastNameTextField.setText(entry.LastName);
+        firstNameTextField.setText(entry.FirstName);
+        phoneNumberTextField.setText(entry.Phone);
+        birthDateField.setValue(entry.BirthDate);
+        // TODO: set Category id.
+    }
 
-	protected Entry getData() {
-		data = new Entry();
-		data.LastName = lastNameTextField.getText();
-		data.FirstName = firstNameTextField.getText();
-		data.Phone = phoneNumberTextField.getText();
-		data.BirthDate = (Date) birthDateField.getValue();
-		// @todo: Picture
+    protected Entry getData() {
+        data = new Entry();
+        data.LastName = lastNameTextField.getText();
+        data.FirstName = firstNameTextField.getText();
+        data.Phone = phoneNumberTextField.getText();
+        data.BirthDate = (Date) birthDateField.getValue();
+        // @todo: Picture
 //	  data.Picture = pictureFile;
-		data.CategoryID = null;
-		return data;
-	}
+        data.CategoryID = null;
+        return data;
+    }
 
-	private void initEvents() {
-		pictureMouseClickListener = new PictureMouseClickListener(this);
-		picturePanel.addMouseListener(pictureMouseClickListener);
-		new FileDrop(picturePanel, new FileDropListener(this));
-	}
+    private void initEvents() {
+        pictureMouseClickListener = new PictureMouseClickListener(this);
+        picturePanel.addMouseListener(pictureMouseClickListener);
+        new FileDrop(picturePanel, new FileDropListener(this));
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -89,6 +93,11 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         });
 
         cancelButton.setText("Отмена");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         picturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Изображение"));
         picturePanel.setForeground(new java.awt.Color(204, 204, 204));
@@ -103,7 +112,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         );
         picturePanelLayout.setVerticalGroup(
             picturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 98, Short.MAX_VALUE)
+            .addGap(0, 96, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,8 +181,18 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-		// TODO add your handling code here:
+        EntryModel EntryModel = new EntryModel();
+        int EntryID = EntryModel.save(getData());
+        
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        dispose();
+//        lastNameTextField.setBackground(new Color(221, 0, 0));
+//        lastNameTextField.setBorder(new LineBorder(new Color(221, 0, 0), 2));
+//        lastNameTextField.setInputVerifier();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JButton cancelButton;
@@ -188,23 +207,23 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     protected javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		setVisible(true);
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        setVisible(true);
+    }
 
-	/**
-	 * @return the pictureFile
-	 */
-	public File getPictureFile() {
-		return pictureFile;
-	}
+    /**
+     * @return the pictureFile
+     */
+    public File getPictureFile() {
+        return pictureFile;
+    }
 
-	/**
-	 * @param pictureFile the pictureFile to set
-	 */
-	public void setPictureFile(File pictureFile) {
-		this.pictureFile = pictureFile;
-		picturePanel.repaint();
-	}
+    /**
+     * @param pictureFile the pictureFile to set
+     */
+    public void setPictureFile(File pictureFile) {
+        this.pictureFile = pictureFile;
+        picturePanel.repaint();
+    }
 }

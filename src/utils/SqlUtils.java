@@ -24,6 +24,7 @@ public class SqlUtils {
 		rs.next();
 		return rs.getInt(1);
 	  } catch (SQLException ex) {
+          Application.handleException(ex);
 	  }
 	  return 0;
     }
@@ -34,6 +35,7 @@ public class SqlUtils {
 		Statement statement = Application.connection().createStatement();
 		statement.executeUpdate(sql);
 	  } catch (SQLException ex) {
+          Application.handleException(ex);
 	  }
     }
 
