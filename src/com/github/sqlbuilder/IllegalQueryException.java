@@ -8,14 +8,14 @@ public class IllegalQueryException extends RuntimeException {
     }
 
     public IllegalQueryException(String message, Throwable cause) {
-	  super(message, cause);
+        super(message, cause);
     }
 
     public IllegalQueryException(String message) {
-	  super(message);
+        super(message);
     }
 
     public IllegalQueryException(Throwable cause) {
-	  super(cause);
+        super(cause);
     }
 }

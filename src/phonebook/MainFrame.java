@@ -1,30 +1,30 @@
 package phonebook;
 
-import javax.swing.JTable;
 import javax.swing.UIManager;
-import phonebook.entity.Entity;
+import phonebook.model.EntryModel;
 
 /**
  * @author S
  */
 public class MainFrame extends javax.swing.JFrame {
 
-	public MainFrame() {
-		initComponents();
-		initEvents();
-	}
+    public MainFrame() {
+        initComponents();
+        initEvents();
+    }
 
-	private void initEvents() {
-		addEntryMenuItem.addActionListener(new AddEntryDialog(this, false));
-		entryTable.setModel(new EntryTableModel());
-	}
+    private void initEvents() {
+        addEntryMenuItem.addActionListener(new AddEntryDialog(this, false));
+        entryTable.setModel(new EntryTableModel());
+        entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         mainScrollPane = new javax.swing.JScrollPane();
-        entryTable = new EntryTable();
+        entryTable = new EntryTable(new EntryTableModel());
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -36,7 +36,6 @@ public class MainFrame extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(640, 480));
 
         entryTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -66,6 +65,11 @@ public class MainFrame extends javax.swing.JFrame {
         entryMenu.add(editEntryMenuItem);
 
         removeEntryMenuItem.setText("Удалить");
+        removeEntryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEntryMenuItemActionPerformed(evt);
+            }
+        });
         entryMenu.add(removeEntryMenuItem);
 
         mainMenuBar.add(entryMenu);
@@ -88,51 +92,60 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void entryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entryTableMouseClicked
-		if (evt.getClickCount() == 2) {
-			EntryTable target = (EntryTable) evt.getSource();
-			int rowID = target.getEntityId();
-			openEditWindow(rowID);
-		}
+        if (evt.getClickCount() == 2) {
+            EntryTable target = (EntryTable) evt.getSource();
+            int rowID = target.getEntityId();
+            openEditWindow(rowID);
+        }
     }//GEN-LAST:event_entryTableMouseClicked
 
     private void editEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEntryMenuItemActionPerformed
-		int rowID = ((EntryTable) entryTable).getEntityId();
-		openEditWindow(rowID);
+        int rowID = ((EntryTable) entryTable).getEntityId();
+        openEditWindow(rowID);
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
-	private void openEditWindow(int id) {
-		System.out.println(id);
-		new EditEntryDialog(id, this, false).setVisible(true);
-	}
+    private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed
+        EntryModel entryModel = new EntryModel();
+        int entityId = ((EntryTable) entryTable).getEntityId();
+        entryModel.delete(entityId);
+        int tableRowId = entryTable.getSelectedRow();
+//        entryTable.getModel()
+        ((EntryTableModel) entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+    }//GEN-LAST:event_removeEntryMenuItemActionPerformed
 
-	public static void main(String args[]) {
-		Application application = Application.getInstance();
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		MainFrame frame = new MainFrame();
+    private void openEditWindow(int id) {
+        System.out.println(id);
+        new EditEntryDialog(id, this, false).setVisible(true);
+    }
+
+    public static void main(String args[]) {
+        Application application = Application.getInstance();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MainFrame frame = new MainFrame();
         application.frame = frame;
-		frame.setVisible(true);
+        frame.setVisible(true);
 //	  frame.setTitle(this.name + " " + version);
 //	  frame.pack();
 //	  frame.setVisible(true);
 //	  frame.addWindowListener(new ApplicationWindowListener(this));
-	}
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem addEntryMenuItem;
     private javax.swing.JMenuItem editEntryMenuItem;
     private javax.swing.JMenu entryMenu;
-    private javax.swing.JTable entryTable;
+    public javax.swing.JTable entryTable;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;

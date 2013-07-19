@@ -84,7 +84,9 @@ public class Structure {
             }
             if (isFirstRun) {
             }
-            connection.commit();
+            if (!connection.getAutoCommit()) {
+                connection.commit();
+            }
         } catch (SQLException ex) {
             Application.handleException(ex);
         }

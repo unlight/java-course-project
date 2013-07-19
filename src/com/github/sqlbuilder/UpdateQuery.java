@@ -1,5 +1,6 @@
 package com.github.sqlbuilder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -15,56 +16,55 @@ public class UpdateQuery {
     private Collection<String> wheres;
 
     public UpdateQuery(String table) {
-	  this.table = table;
+        this.table = table;
 
-	  this.sets = new LinkedHashMap<String, String>();
-	  this.wheres = new LinkedList<String>();
+        this.sets = new LinkedHashMap<String, String>();
+        this.wheres = new LinkedList<String>();
     }
 
     public UpdateQuery set(String column, String value) {
-	  sets.put(column, value);
-	  return this;
+        sets.put(column, value);
+        return this;
     }
 
     public UpdateQuery addWhere(String where) {
-	  wheres.add(where);
-	  return this;
+        wheres.add(where);
+        return this;
     }
 
     @Override
     public String toString() {
-	  if (sets.isEmpty()) {
-		throw new IllegalQueryException("Not contains SET statements!");
-	  }
-
-	  StringBuilder result = new StringBuilder();
-
-	  result.append("UPDATE ")
-		    .append(table)
-		    .append(" SET ");
-
-	  for (Entry<String, String> entry : sets.entrySet()) {
-	  	String string = entry.getValue();
-	  	
-        if (string.equals("")) {
-            string = "null";
-        } else if (string.startsWith("@")) {
-            string = string.substring(1);
-        } else {
-            string = "'" + string + "'";
+        if (sets.isEmpty()) {
+            throw new IllegalQueryException("Not contains SET statements!");
         }
 
-	  	string = "'" + string + "'";
-		result.append(entry.getKey())
-			  .append(" = ")
-			  .append(string);
-	  }
+        StringBuilder result = new StringBuilder();
 
-	  if (!wheres.isEmpty()) {
-		result.append(" WHERE ");
-		result.append(StringUtils.join(wheres, " AND "));
-	  }
+        result.append("UPDATE ")
+                .append(table)
+                .append(" SET ");
 
-	  return result.toString();
+        ArrayList strings = new ArrayList();
+        for (Entry<String, String> entry : sets.entrySet()) {
+            String string = entry.getValue();
+
+            if (string.equals("")) {
+                string = "null";
+            } else if (string.startsWith("@")) {
+                string = string.substring(1);
+            } else {
+                string = "'" + string + "'";
+            }
+            strings.add(entry.getKey() + " = " + string);
+        }
+        
+        result.append(StringUtils.join(strings, ", "));
+
+        if (!wheres.isEmpty()) {
+            result.append(" WHERE ");
+            result.append(StringUtils.join(wheres, " AND "));
+        }
+
+        return result.toString();
     }
 }

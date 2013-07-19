@@ -1,7 +1,5 @@
 package phonebook.entity;
 
-import java.lang.reflect.Field;
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import phonebook.Application;
@@ -20,15 +18,15 @@ public class Entry extends Entity {
 
     @Override
     public void attachResultSet(ResultSet set) {
-	  try {
-		EntryID = set.getInt("EntryID");
-		FirstName = set.getString("FirstName");
-		LastName = set.getString("LastName");
-		BirthDate = set.getDate("BirthDate");
-		Phone = set.getString("Phone");
-		CategoryID = set.getInt("CategoryID");
-	  } catch (SQLException ex) {
-		Application.handleException(ex);
-	  }
+        try {
+            EntryID = set.getInt("EntryID");
+            FirstName = set.getString("FirstName");
+            LastName = set.getString("LastName");
+            BirthDate = Date.fromString(set.getString("BirthDate"));
+            Phone = set.getString("Phone");
+            CategoryID = set.getInt("CategoryID");
+        } catch (SQLException ex) {
+            Application.handleException(ex);
+        }
     }
 }

@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JDialog;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import net.iharder.dnd.FileDrop;
+import phonebook.entity.Date;
 import phonebook.entity.Entry;
 import phonebook.model.EntryModel;
 
@@ -29,22 +29,25 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     }
 
     protected void setData(Entry entry) {
-        lastNameTextField.setText(entry.LastName);
-        firstNameTextField.setText(entry.FirstName);
-        phoneNumberTextField.setText(entry.Phone);
-        birthDateField.setValue(entry.BirthDate);
+        data = entry;
+        lastNameTextField.setText(data.LastName);
+        firstNameTextField.setText(data.FirstName);
+        phoneNumberTextField.setText(data.Phone);
+        birthDateField.setValue(data.BirthDate);
         // TODO: set Category id.
     }
 
     protected Entry getData() {
-        data = new Entry();
-        data.LastName = lastNameTextField.getText();
-        data.FirstName = firstNameTextField.getText();
-        data.Phone = phoneNumberTextField.getText();
-        data.BirthDate = (Date) birthDateField.getValue();
-        // @todo: Picture
-//	  data.Picture = pictureFile;
-        data.CategoryID = null;
+        if (data == null) {
+            data = new Entry();
+            data.LastName = lastNameTextField.getText();
+            data.FirstName = firstNameTextField.getText();
+            data.Phone = phoneNumberTextField.getText();
+            data.BirthDate = new Date((java.util.Date) birthDateField.getValue());
+            // @todo: Picture
+            //	  data.Picture = pictureFile;
+            data.CategoryID = null;
+        }
         return data;
     }
 
@@ -183,7 +186,15 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         EntryModel EntryModel = new EntryModel();
         int EntryID = EntryModel.save(getData());
-        
+//        EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
+        if (getData() != null && getData().EntryID != null) {
+            
+        } else {
+            EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
+//            int firstRow = entryTableModel.getRowCount();
+//            int lastRow = firstRow + 1;
+            entryTableModel.fireTableDataChanged(); // todo: use rowinserted.
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -192,7 +203,6 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 //        lastNameTextField.setBorder(new LineBorder(new Color(221, 0, 0), 2));
 //        lastNameTextField.setInputVerifier();
     }//GEN-LAST:event_cancelButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JButton cancelButton;

@@ -11,27 +11,27 @@ public class DeleteQuery {
     private Collection<String> wheres;
 
     public DeleteQuery(String table) {
-	  this.table = table;
-	  wheres = new LinkedList<String>();
+        this.table = table;
+        wheres = new LinkedList<String>();
     }
 
     public DeleteQuery addWhere(String where) {
-	  wheres.add(where);
-	  return this;
+        wheres.add(where);
+        return this;
     }
 
     @Override
     public String toString() {
-	  StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
-	  result.append("DELETE FROM ")
-		    .append(table);
+        result.append("DELETE FROM ")
+                .append(table);
 
-	  if (!wheres.isEmpty()) {
-		result.append(" WHERE ")
-			  .append(StringUtils.join(wheres, " AND "));
-	  }
+        if (!wheres.isEmpty()) {
+            result.append(" WHERE ")
+                    .append(StringUtils.join(wheres, " AND "));
+        }
 
-	  return result.toString();
+        return result.toString();
     }
 }

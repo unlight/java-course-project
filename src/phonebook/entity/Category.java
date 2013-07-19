@@ -8,7 +8,7 @@ import phonebook.Application;
  * @author S
  */
 public class Category extends Entity {
-    
+
     public Integer CategoryID;
     public String Name;
 
@@ -21,5 +21,4 @@ public class Category extends Entity {
             Application.handleException(ex);
         }
     }
-
 }

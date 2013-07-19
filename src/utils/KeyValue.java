@@ -9,36 +9,36 @@ public class KeyValue {
     }
 
     public KeyValue(Object key, String value) {
-	  this.key = key;
-	  this.value = value;
+        this.key = key;
+        this.value = value;
     }
 
     public KeyValue(Object key, Object value) {
-	  this(key, value.toString());
+        this(key, value.toString());
     }
 
     public Object getKey() {
-	  return this.key;
+        return this.key;
     }
 
     public String getKeyString() {
-	  return getKey().toString();
+        return getKey().toString();
     }
 
     public void setKey(Object key) {
-	  this.key = key;
+        this.key = key;
     }
 
     public String getValue() {
-	  return this.value;
+        return this.value;
     }
 
     public void setValue(String value) {
-	  this.value = value;
+        this.value = value;
     }
 
     @Override
     public String toString() {
-	  return this.value;
+        return this.value;
     }
 }

@@ -19,141 +19,141 @@ public class SelectQuery {
     private Collection<String> havings;
 
     public SelectQuery() {
-	  columns = new LinkedList<String>();
-	  froms = new LinkedList<String>();
-	  wheres = new LinkedList<String>();
-	  joins = new LinkedHashMap<String, String>();
-	  groups = new LinkedList<String>();
-	  orders = new LinkedList<String>();
-	  havings = new LinkedList<String>();
+        columns = new LinkedList<String>();
+        froms = new LinkedList<String>();
+        wheres = new LinkedList<String>();
+        joins = new LinkedHashMap<String, String>();
+        groups = new LinkedList<String>();
+        orders = new LinkedList<String>();
+        havings = new LinkedList<String>();
     }
 
     public SelectQuery addFrom(String from) {
-	  froms.add(from);
-	  return this;
+        froms.add(from);
+        return this;
     }
 
     public SelectQuery addFrom(String... froms) {
-	  for (String from : froms) {
-		addFrom(from);
-	  }
+        for (String from : froms) {
+            addFrom(from);
+        }
 
-	  return this;
+        return this;
     }
 
     public SelectQuery addColumn(String column) {
-	  columns.add(column);
-	  return this;
+        columns.add(column);
+        return this;
     }
 
     public SelectQuery addColumn(String... columns) {
-	  for (String column : columns) {
-		addColumn(column);
-	  }
+        for (String column : columns) {
+            addColumn(column);
+        }
 
-	  return this;
+        return this;
     }
 
     public SelectQuery addWhere(String where) {
-	  wheres.add(where);
-	  return this;
+        wheres.add(where);
+        return this;
     }
 
     public SelectQuery and(String where) {
-	  return addWhere("AND " + where);
+        return addWhere("AND " + where);
     }
 
     public SelectQuery or(String where) {
-	  return addWhere("OR " + where);
+        return addWhere("OR " + where);
     }
 
     public SelectQuery join(String join, String on) {
-	  joins.put("JOIN " + join, on);
-	  return this;
+        joins.put("JOIN " + join, on);
+        return this;
     }
 
     public SelectQuery innerJoin(String join, String on) {
-	  joins.put("INNER JOIN " + join, on);
-	  return this;
+        joins.put("INNER JOIN " + join, on);
+        return this;
     }
 
     public SelectQuery outterJoin(String join, String on) {
-	  joins.put("OUTTER JOIN " + join, on);
-	  return this;
+        joins.put("OUTTER JOIN " + join, on);
+        return this;
     }
 
     public SelectQuery groupBy(String... groups) {
-	  for (String group : groups) {
-		this.groups.add(group);
-	  }
+        for (String group : groups) {
+            this.groups.add(group);
+        }
 
-	  return this;
+        return this;
     }
 
     public SelectQuery orderBy(String... orders) {
-	  for (String order : orders) {
-		this.orders.add(order);
-	  }
+        for (String order : orders) {
+            this.orders.add(order);
+        }
 
-	  return this;
+        return this;
     }
 
     public SelectQuery having(String... havings) {
-	  for (String having : havings) {
-		this.havings.add(having);
-	  }
+        for (String having : havings) {
+            this.havings.add(having);
+        }
 
-	  return this;
+        return this;
     }
 
     @Override
     public String toString() {
-	  StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
-	  if (columns.isEmpty() && froms.isEmpty()) {
-		return result.toString();
-	  }
+        if (columns.isEmpty() && froms.isEmpty()) {
+            return result.toString();
+        }
 
-	  result.append("SELECT ");
+        result.append("SELECT ");
 
-	  if (columns.isEmpty()) {
-		result.append("*");
-	  } else {
-		result.append(StringUtils.join(columns, ", "));
-	  }
+        if (columns.isEmpty()) {
+            result.append("*");
+        } else {
+            result.append(StringUtils.join(columns, ", "));
+        }
 
-	  result.append(" FROM ");
+        result.append(" FROM ");
 
-	  if (froms.isEmpty()) {
-		throw new IllegalQueryException("No 'from' informed!");
-	  } else {
-		result.append(StringUtils.join(froms, ", "));
-	  }
+        if (froms.isEmpty()) {
+            throw new IllegalQueryException("No 'from' informed!");
+        } else {
+            result.append(StringUtils.join(froms, ", "));
+        }
 
-	  for (Entry<String, String> entry : joins.entrySet()) {
-		result.append(" " + entry.getKey() + " ON " + entry.getValue());
-	  }
+        for (Entry<String, String> entry : joins.entrySet()) {
+            result.append(" " + entry.getKey() + " ON " + entry.getValue());
+        }
 
-	  if (!wheres.isEmpty()) {
-		result.append(" WHERE ");
-		result.append(StringUtils.join(wheres, " "));
-	  }
+        if (!wheres.isEmpty()) {
+            result.append(" WHERE ");
+            result.append(StringUtils.join(wheres, " "));
+        }
 
-	  if (!groups.isEmpty()) {
-		result.append(" GROUP BY ");
-		result.append(StringUtils.join(groups, ", "));
-	  }
+        if (!groups.isEmpty()) {
+            result.append(" GROUP BY ");
+            result.append(StringUtils.join(groups, ", "));
+        }
 
-	  if (!havings.isEmpty()) {
-		result.append(" HAVING ");
-		result.append(StringUtils.join(havings, ", "));
-	  }
+        if (!havings.isEmpty()) {
+            result.append(" HAVING ");
+            result.append(StringUtils.join(havings, ", "));
+        }
 
-	  if (!orders.isEmpty()) {
-		result.append(" ORDER BY ");
-		result.append(StringUtils.join(orders, ", "));
-	  }
+        if (!orders.isEmpty()) {
+            result.append(" ORDER BY ");
+            result.append(StringUtils.join(orders, ", "));
+        }
 
-	  return result.toString();
+        return result.toString();
     }
 }

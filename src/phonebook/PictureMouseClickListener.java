@@ -16,15 +16,15 @@ public class PictureMouseClickListener extends MouseAdapter {
     AddEntryDialog owner;
 
     public PictureMouseClickListener(AddEntryDialog owner) {
-	  this.owner = owner;
+        this.owner = owner;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-	  JFileChooser pictureFileChooser = new JFileChooser();
-	  pictureFileChooser.setFileFilter(new FileNameExtensionFilter("Изображения", ImageIO.getReaderFileSuffixes()));
-	  int showDialog = pictureFileChooser.showDialog(owner, null);
-	  File selectedFile = pictureFileChooser.getSelectedFile();
-	  owner.setPictureFile(selectedFile);
+        JFileChooser pictureFileChooser = new JFileChooser();
+        pictureFileChooser.setFileFilter(new FileNameExtensionFilter("Изображения", ImageIO.getReaderFileSuffixes()));
+        int showDialog = pictureFileChooser.showDialog(owner, null);
+        File selectedFile = pictureFileChooser.getSelectedFile();
+        owner.setPictureFile(selectedFile);
     }
 }

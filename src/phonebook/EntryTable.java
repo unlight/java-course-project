@@ -8,12 +8,21 @@ import phonebook.entity.Entry;
  */
 public class EntryTable extends JTable {
 
+    EntryTable(EntryTableModel entryTableModel) {
+        super(entryTableModel);
+    }
+
     public Entry getEntity() {
-	  int rowId = getSelectedRow();
-	  return ((EntryTableModel) getModel()).getRow(rowId);
+        int rowId = getSelectedRow();
+        return ((EntryTableModel) getModel()).getRow(rowId);
     }
 
     public int getEntityId() {
-	  return getEntity().EntryID;
+        return getEntity().EntryID;
+    }
+    
+    @Override
+    public EntryTableModel getModel() {
+        return (EntryTableModel) super.getModel();
     }
 }
