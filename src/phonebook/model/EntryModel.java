@@ -14,17 +14,7 @@ public class EntryModel extends Model<Entry> {
         super("Entry");
     }
 
-    @Override
-    public Integer save(Entry entity) {
-        if (entity.EntryID == null) {
-            return this.insert(entity);
-        } else {
-            this.update(entity);
-            return entity.EntryID;
-        }
-    }
-
-    private Integer insert(Entry entity) {
+    public Integer insert(Entry entity) {
         InsertQuery query = new InsertQuery(name)
                 .columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID", "DateInserted", "DateUpdated")
                 .values(entity.FirstName, entity.LastName, entity.Phone, entity.BirthDate, entity.CategoryID, "@datetime('Now')", "@datetime('Now')");
@@ -32,7 +22,7 @@ public class EntryModel extends Model<Entry> {
         return SqlUtils.insert(query);
     }
 
-    private void update(Entry entity) {
+    public void update(Entry entity) {
         UpdateQuery query = new UpdateQuery(name)
                 .set("FirstName", entity.FirstName)
                 .set("LastName", entity.LastName)
