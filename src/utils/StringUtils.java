@@ -1,24 +1,67 @@
 package utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Random;
 
 public class StringUtils {
+	
+	public static String loremWord() {
+		String s = loremParagraph();
+		String[] split = s.split("( |,|\\.|\\?|;|\\:)");
+		Random generator = new Random(); 
+		int index = generator.nextInt(split.length);
+		s = split[index];
+		char first = Character.toUpperCase(s.charAt(0));
+		s = first + s.substring(1);
+		return s;
+	}
 
-    public static String join(Collection<String> c, String d) {
-        String[] strings = c.toArray(new String[c.size()]);
-        return join(strings, d);
-    }
+	public static String loremParagraph() {
+		URL url = null;
+		try {
+			url = new URL("http://loripsum.net/generate.php?p=1&l=short");
+		} catch (MalformedURLException ex) {
+		}
+		URLConnection con;
+		String html = "";
+		try {
+			con = url.openConnection();
+			con.setReadTimeout(1000);
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer sb = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				sb.append(inputLine);
+			}
+			in.close();
+			html = sb.toString();
+		} catch (IOException ex) {
+		}
+		if ("".equals(html)) return "";
+		html = html.replaceAll("\\<.*?\\>", "");
+		return html;
+	}
 
-    public static String join(String r[], String d) {
-        if (r.length == 0) {
-            return "";
-        }
-        StringBuilder sb = new StringBuilder();
-        int i;
-        for (i = 0; i < r.length - 1; i++) {
-            sb.append(r[i]).append(d);
-        }
-        return sb.toString() + r[i];
-    }
+	public static String join(Collection<String> c, String d) {
+		String[] strings = c.toArray(new String[c.size()]);
+		return join(strings, d);
+	}
+
+	public static String join(String r[], String d) {
+		if (r.length == 0) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+		int i;
+		for (i = 0; i < r.length - 1; i++) {
+			sb.append(r[i]).append(d);
+		}
+		return sb.toString() + r[i];
+	}
 }
