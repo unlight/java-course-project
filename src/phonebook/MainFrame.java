@@ -1,13 +1,22 @@
 package phonebook;
 
+import javax.swing.UIManager;
+import phonebook.model.EntryModel;
+
 /**
- * @author
- * S
+ * @author S
  */
 public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
-	  initComponents();
+        initComponents();
+        initEvents();
+    }
+
+    private void initEvents() {
+        addEntryMenuItem.addActionListener(new AddEntryDialog(this, false));
+        entryTable.setModel(new EntryTableModel());
+        entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
     }
 
     @SuppressWarnings("unchecked")
@@ -15,7 +24,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         mainScrollPane = new javax.swing.JScrollPane();
-        mainTable = new javax.swing.JTable();
+        entryTable = new EntryTable(new EntryTableModel());
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -27,32 +36,13 @@ public class MainFrame extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(640, 480));
 
-        mainTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null}
-            },
-            new String [] {
-                "Фамилия", "Имя", "Телефон", "Дата рождения"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        entryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entryTableMouseClicked(evt);
             }
         });
-        mainScrollPane.setViewportView(mainTable);
+        mainScrollPane.setViewportView(entryTable);
 
         fileMenu.setText("Файл");
 
@@ -67,9 +57,19 @@ public class MainFrame extends javax.swing.JFrame {
         entryMenu.add(addEntryMenuItem);
 
         editEntryMenuItem.setText("Редактировать");
+        editEntryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editEntryMenuItemActionPerformed(evt);
+            }
+        });
         entryMenu.add(editEntryMenuItem);
 
         removeEntryMenuItem.setText("Удалить");
+        removeEntryMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEntryMenuItemActionPerformed(evt);
+            }
+        });
         entryMenu.add(removeEntryMenuItem);
 
         mainMenuBar.add(entryMenu);
@@ -92,54 +92,65 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
-	  /* Set the Nimbus look and feel */
-	  //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-	   * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-	   */
-	  try {
-		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-		    if ("Windows".equals(info.getName())) {
-			  javax.swing.UIManager.setLookAndFeel(info.getClassName());
-			  break;
-		    }
-		}
-	  } catch (ClassNotFoundException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  } catch (InstantiationException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  } catch (IllegalAccessException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-		java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-	  }
-	  //</editor-fold>
+    private void entryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entryTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            EntryTable target = (EntryTable) evt.getSource();
+            int rowID = target.getEntityId();
+            openEditWindow(rowID);
+        }
+    }//GEN-LAST:event_entryTableMouseClicked
 
-	  /* Create and display the form */
-	  java.awt.EventQueue.invokeLater(new Runnable() {
-		public void run() {
-		    new MainFrame().setVisible(true);
-		}
-	  });
+    private void editEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEntryMenuItemActionPerformed
+        int rowID = ((EntryTable) entryTable).getEntityId();
+        openEditWindow(rowID);
+    }//GEN-LAST:event_editEntryMenuItemActionPerformed
+
+    private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed
+        EntryModel entryModel = new EntryModel();
+        int entityId = ((EntryTable) entryTable).getEntityId();
+        entryModel.delete(entityId);
+        int tableRowId = entryTable.getSelectedRow();
+//        entryTable.getModel()
+        ((EntryTableModel) entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+    }//GEN-LAST:event_removeEntryMenuItemActionPerformed
+
+    private void openEditWindow(int id) {
+        System.out.println(id);
+        new EditEntryDialog(id, this, false).setVisible(true);
+    }
+
+    public static void main(String args[]) {
+        Application application = Application.getInstance();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MainFrame frame = new MainFrame();
+        application.frame = frame;
+        frame.setVisible(true);
+//	  frame.setTitle(this.name + " " + version);
+//	  frame.pack();
+//	  frame.setVisible(true);
+//	  frame.addWindowListener(new ApplicationWindowListener(this));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem addEntryMenuItem;
     private javax.swing.JMenuItem editEntryMenuItem;
     private javax.swing.JMenu entryMenu;
+    public javax.swing.JTable entryTable;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JScrollPane mainScrollPane;
-    private javax.swing.JTable mainTable;
     private javax.swing.JMenuItem removeEntryMenuItem;
     // End of variables declaration//GEN-END:variables
 }
