@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -12,6 +13,7 @@ import net.iharder.dnd.FileDrop;
 import phonebook.entity.Date;
 import phonebook.entity.Entry;
 import phonebook.model.EntryModel;
+import utils.StringUtils;
 
 /**
  * @author S
@@ -72,6 +74,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         birthDateField = new net.sf.nachocalendar.components.DateField();
         cancelButton = new javax.swing.JButton();
         picturePanel = new javax.swing.JPanel();
+        testDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Новая запись");
@@ -115,8 +118,15 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         );
         picturePanelLayout.setVerticalGroup(
             picturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
+            .addGap(0, 98, Short.MAX_VALUE)
         );
+
+        testDataButton.setText("Lorem ipsum");
+        testDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testDataButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,10 +135,6 @@ public class AddEntryDialog extends JDialog implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -148,7 +154,14 @@ public class AddEntryDialog extends JDialog implements ActionListener {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(birthDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(picturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(picturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(testDataButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -176,7 +189,8 @@ public class AddEntryDialog extends JDialog implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
-                    .addComponent(cancelButton))
+                    .addComponent(cancelButton)
+                    .addComponent(testDataButton))
                 .addContainerGap())
         );
 
@@ -188,13 +202,14 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         int EntryID = EntryModel.save(getData());
 //        EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
         if (getData() != null && getData().EntryID != null) {
-            
+            //todo: edit
         } else {
             EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
 //            int firstRow = entryTableModel.getRowCount();
 //            int lastRow = firstRow + 1;
             entryTableModel.fireTableDataChanged(); // todo: use rowinserted.
         }
+		dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -203,6 +218,15 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 //        lastNameTextField.setBorder(new LineBorder(new Color(221, 0, 0), 2));
 //        lastNameTextField.setInputVerifier();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void testDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testDataButtonActionPerformed
+		lastNameTextField.setText(StringUtils.loremWord());
+		firstNameTextField.setText(StringUtils.loremWord());
+		birthDateField.setValue(StringUtils.randomDate());
+		phoneNumberTextField.setText(StringUtils.randomPhone());
+		((JButton)evt.getSource()).setEnabled(false);
+    }//GEN-LAST:event_testDataButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JButton cancelButton;
@@ -215,6 +239,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     private javax.swing.JTextField phoneNumberTextField;
     private javax.swing.JPanel picturePanel;
     protected javax.swing.JButton saveButton;
+    private javax.swing.JButton testDataButton;
     // End of variables declaration//GEN-END:variables
 
     @Override

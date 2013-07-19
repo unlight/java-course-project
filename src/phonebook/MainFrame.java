@@ -133,7 +133,7 @@ public class MainFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
         MainFrame frame = new MainFrame();
-        application.frame = frame;
+        application.setMainFrame(frame);
         frame.setVisible(true);
 //	  frame.setTitle(this.name + " " + version);
 //	  frame.pack();

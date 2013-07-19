@@ -7,15 +7,43 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Random;
 
 public class StringUtils {
+	
+	public static String randomPhone() {
+		StringBuffer sb = new StringBuffer(10);
+		Random generator = new Random();
+		sb.append("(");
+		sb.append(100 + generator.nextInt(900));
+		sb.append(") ");
+		sb.append(100 + generator.nextInt(900));
+		sb.append("-");
+		sb.append(10 + generator.nextInt(90));
+		sb.append("-");
+		sb.append(10 + generator.nextInt(90));
+		return sb.toString();
+	}
+	
+	public static Date randomDate() {
+		Random generator = new Random();
+		Date now = new Date();
+		int year = 1970 + generator.nextInt(now.getYear() - 70); // 1900
+		int month = generator.nextInt(12);
+		int day = generator.nextInt(28);
+		Date result = new Date(year, month, day);
+		return result;
+	}
 	
 	public static String loremWord() {
 		String s = loremParagraph();
 		String[] split = s.split("( |,|\\.|\\?|;|\\:)");
 		Random generator = new Random(); 
 		int index = generator.nextInt(split.length);
+		if (index >= split.length) {
+			index = split.length - 1;
+		}
 		s = split[index];
 		char first = Character.toUpperCase(s.charAt(0));
 		s = first + s.substring(1);

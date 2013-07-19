@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import utils.StringUtils;
 
 public class Application {
 
@@ -64,4 +65,17 @@ public class Application {
     private Connection getConnection() {
         return connection;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	void setMainFrame(MainFrame f) {
+		frame = f;
+		frame.setTitle(StringUtils.join(new String[]{name, version}, " "));
+	}
 }
