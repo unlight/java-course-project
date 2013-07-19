@@ -10,7 +10,7 @@ import utils.StringUtils;
 public class Application {
 
     private String name = "Phonebook";
-    private String version = "1.0.0";
+    private String version = "1.1.0";
     private String datafile = "./phonebook.dat";
     private Connection connection;
     public MainFrame frame;
