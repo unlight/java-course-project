@@ -5,21 +5,17 @@ import java.awt.event.ActionListener;
 import phonebook.model.EntryModel;
 
 /**
-  * @author S
+ * @author S
  */
 public class RemoveEntryActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		MainFrame frame = Application.getInstance().frame;
-        EntryModel entryModel = new EntryModel();
-        int entityId = ((EntryTable) frame.entryTable).getEntityId();
-        entryModel.delete(entityId);
-        int tableRowId = frame.entryTable.getSelectedRow();
-        ((EntryTableModel) frame.entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+		EntryModel entryModel = new EntryModel();
+		int entityId = ((EntryTable) frame.entryTable).getEntityId();
+		entryModel.delete(entityId);
+		int tableRowId = frame.entryTable.getSelectedRow();
+		((EntryTableModel) frame.entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
 	}
-	
-//	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-//        removeEntryMenuItemActionPerformed(evt);
-//    }
 }

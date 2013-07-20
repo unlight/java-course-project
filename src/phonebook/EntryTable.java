@@ -18,7 +18,7 @@ public class EntryTable extends JTable {
     }
 
     public int getEntityId() {
-        return getEntity().EntryID;
+        return getEntity().getEntryID();
     }
     
     @Override

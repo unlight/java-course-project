@@ -23,47 +23,48 @@ import utils.StringUtils;
  */
 public class AddEntryDialog extends JDialog implements ActionListener {
 
-    PictureMouseClickListener pictureMouseClickListener;
-    private File pictureFile;
-    private Entry data;
+	PictureMouseClickListener pictureMouseClickListener;
+	private File pictureFile;
+	private Entry data;
+	private CategoryComboBoxModel categoryComboBoxModel;
 
-    public AddEntryDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        initEvents();
-    }
+	public AddEntryDialog(java.awt.Frame parent, boolean modal) {
+		super(parent, modal);
+		initComponents();
+		postInit();
+	}
 
-    protected void setData(Entry entry) {
-        data = entry;
-        lastNameTextField.setText(data.LastName);
-        firstNameTextField.setText(data.FirstName);
-        phoneNumberTextField.setText(data.Phone);
-        birthDateField.setValue(data.BirthDate);
-        // TODO: set Category id.
-    }
+	protected void setData(Entry entry) {
+		data = entry;
+		lastNameTextField.setText(data.getLastName());
+		firstNameTextField.setText(data.getFirstName());
+		phoneNumberTextField.setText(data.getPhone());
+		birthDateField.setValue(data.getBirthDate());
+		categoryComboBoxModel.setSelectedItem(entry.getCategoryID());
+	}
 
-    protected Entry getData() {
-        if (data == null) {
-            data = new Entry();
-            data.LastName = lastNameTextField.getText();
-            data.FirstName = firstNameTextField.getText();
-            data.Phone = phoneNumberTextField.getText();
-            data.BirthDate = new Date((java.util.Date) birthDateField.getValue());
-            // @todo: Picture
-            //	  data.Picture = pictureFile;
-            data.CategoryID = null;
-        }
-        return data;
-    }
+	protected Entry getData() {
+		if (data == null) {
+			data = new Entry();
+		}
+		data.LastName = lastNameTextField.getText();
+		data.FirstName = firstNameTextField.getText();
+		data.Phone = phoneNumberTextField.getText();
+		data.BirthDate = new Date((java.util.Date) birthDateField.getValue());
+		System.out.println("categoryComboBoxModel.getSelectedCategory(): " + categoryComboBoxModel.getSelectedCategory());
+		data.setCategory(categoryComboBoxModel.getSelectedCategory());
+		return data;
+	}
 
-    private void initEvents() {
-        pictureMouseClickListener = new PictureMouseClickListener(this);
-        picturePanel.addMouseListener(pictureMouseClickListener);
-        new FileDrop(picturePanel, new FileDropListener(this));
-		categoryComboBox.setModel(new CategoryComboBoxModel());
-    }
+	private void postInit() {
+		pictureMouseClickListener = new PictureMouseClickListener(this);
+		picturePanel.addMouseListener(pictureMouseClickListener);
+		new FileDrop(picturePanel, new FileDropListener(this));
+		categoryComboBoxModel = new CategoryComboBoxModel();
+		categoryComboBox.setModel(categoryComboBoxModel);
+	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -226,22 +227,21 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        EntryModel EntryModel = new EntryModel();
-        int EntryID = EntryModel.save(getData());
-//        EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
-        if (getData() != null && getData().EntryID != null) {
-            //todo: edit
-        } else {
-            EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
-//            int firstRow = entryTableModel.getRowCount();
-//            int lastRow = firstRow + 1;
-            entryTableModel.fireTableDataChanged();
-        }
+		EntryModel EntryModel = new EntryModel();
+		int EntryID = EntryModel.save(getData());
+		EntryTable entryTable = (EntryTable) ((MainFrame) getParent()).entryTable;
+		EntryTableModel entryTableModel = entryTable.getModel();
+		if (getData() != null && getData().getEntryID() != null) {
+			int selectedRow = entryTable.getSelectedRow();
+			entryTableModel.fireTableRowsUpdated(selectedRow, selectedRow);
+		} else {
+			entryTableModel.fireTableDataChanged();
+		}
 		dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        dispose();
+		dispose();
 //        lastNameTextField.setBackground(new Color(221, 0, 0));
 //        lastNameTextField.setBorder(new LineBorder(new Color(221, 0, 0), 2));
 //        lastNameTextField.setInputVerifier();
@@ -252,14 +252,13 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		firstNameTextField.setText(StringUtils.loremWord());
 		birthDateField.setValue(StringUtils.randomDate());
 		phoneNumberTextField.setText(StringUtils.randomPhone());
-		((JButton)evt.getSource()).setEnabled(false);
+		((JButton) evt.getSource()).setEnabled(false);
     }//GEN-LAST:event_testDataButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        new RemoveEntryActionListener().actionPerformed(evt);
+		new RemoveEntryActionListener().actionPerformed(evt);
 		dispose();
     }//GEN-LAST:event_removeButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JLabel birthdateLabel;
@@ -278,23 +277,23 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     private javax.swing.JButton testDataButton;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        setVisible(true);
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setVisible(true);
+	}
 
-    /**
-     * @return the pictureFile
-     */
-    public File getPictureFile() {
-        return pictureFile;
-    }
+	/**
+	 * @return the pictureFile
+	 */
+	public File getPictureFile() {
+		return pictureFile;
+	}
 
-    /**
-     * @param pictureFile the pictureFile to set
-     */
-    public void setPictureFile(File pictureFile) {
-        this.pictureFile = pictureFile;
-        picturePanel.repaint();
-    }
+	/**
+	 * @param pictureFile the pictureFile to set
+	 */
+	public void setPictureFile(File pictureFile) {
+		this.pictureFile = pictureFile;
+		picturePanel.repaint();
+	}
 }

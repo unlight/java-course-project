@@ -18,3 +18,4 @@ TODO
 - select category
 - sorting
 - use rowinserted in fireTableDataChanged
+- show category in entry table

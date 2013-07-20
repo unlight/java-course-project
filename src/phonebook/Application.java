@@ -50,8 +50,8 @@ public class Application {
      */
     public static void handleException(Exception e) {
         e.printStackTrace();
-        Application app = getInstance();
-        JOptionPane.showMessageDialog(null, e.toString(), e.toString(), JOptionPane.ERROR_MESSAGE);
+//        Application app = getInstance();
+//        JOptionPane.showMessageDialog(null, e.toString(), e.toString(), JOptionPane.ERROR_MESSAGE);
     }
 
     public void closeConnection() {

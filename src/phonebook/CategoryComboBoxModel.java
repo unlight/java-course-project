@@ -1,5 +1,6 @@
 package phonebook;
 
+import java.security.InvalidParameterException;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.AbstractListModel;
@@ -30,7 +31,8 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 
 	@Override
 	public Category getElementAt(int index) {
-		return getDataList().get(index);
+		Category category = getDataList().get(index);
+		return category;
 	}
 
 	public int getIndexOf(Object anObject) {
@@ -39,6 +41,12 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 
 	public void setSelectedItem(Category anObject) {
 		selected = anObject;
+		System.out.println("setSelectedItem: " + anObject);
+	}
+
+	public Category getSelectedCategory() {
+		Object object = getSelectedItem();
+		return (Category) object;
 	}
 
 	@Override
@@ -53,6 +61,17 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 
 	@Override
 	public void setSelectedItem(Object anItem) {
-		selected = (Category) anItem;
+		System.out.println("setSelectedItem: " + anItem);
+		if (anItem == null) {
+			anItem = 0;
+		}
+		if (anItem instanceof Category) {
+			setSelectedItem((Category) anItem);
+		} else if (anItem instanceof Integer) {
+			Category category = categoryModel.getId((int) anItem);
+			setSelectedItem(category);
+		} else {
+			throw new InvalidParameterException();
+		}
 	}
 }
