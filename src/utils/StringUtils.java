@@ -46,11 +46,12 @@ public class StringUtils {
 		}
 		s = split[index];
 		char first = 0;
+		first = Character.toUpperCase(s.charAt(0));
 		try {
-			first = Character.toUpperCase(s.charAt(0));
+			s = first + s.substring(1);			
 		} catch (StringIndexOutOfBoundsException e) {
+			s = "None";
 		}
-		s = first + s.substring(1);
 		return s;
 	}
 
