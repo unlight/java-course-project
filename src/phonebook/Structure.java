@@ -41,8 +41,8 @@ public class Structure {
     }
 
     public ResultSet query(String sql) throws SQLException {
-        ResultSet resultSet = connection.createStatement().executeQuery(sql);
-        return resultSet;
+        ResultSet result = SqlUtils.executeQuery(sql);
+        return result;
     }
 
     public ArrayList<String> getColumns(String table) {

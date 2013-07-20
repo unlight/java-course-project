@@ -14,13 +14,13 @@ public class EntryTableModel extends AbstractTableModel {
 
     EntryModel entryModel = new EntryModel();
     String[] columnNames = new String[]{
-        "Имя", "Фамилия", "Телефон", "Дата рождения"
+        "Имя", "Фамилия", "Телефон", "Дата рождения", "Категория"
     };
     String[] columnKeys = new String[]{
-        "FirstName", "LastName", "Phone", "BirthDate"
+        "FirstName", "LastName", "Phone", "BirthDate", "Category"
     };
     Class<?>[] columnClasses = new Class<?>[]{
-        String.class, String.class, String.class, Date.class
+        String.class, String.class, String.class, Date.class, String.class
     };
     List<Entry> dataList;
 

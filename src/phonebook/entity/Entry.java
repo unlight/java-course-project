@@ -3,6 +3,7 @@ package phonebook.entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import phonebook.Application;
+import phonebook.model.CategoryModel;
 
 /**
  * @author S
@@ -49,9 +50,23 @@ public class Entry extends Entity {
 	public Integer getCategoryID() {
 		return CategoryID;
 	}
+	
+	private CategoryModel categoryModel;
+	private Category category;
+	
+	public Category getCategory() {
+		if (categoryModel == null) {
+			categoryModel = new CategoryModel();
+		}
+		if (category == null && CategoryID != null) {
+			category = categoryModel.getId(CategoryID);
+		}
+		return category;
+	}
 
 	public void setCategory(Category selectedCategory) {
-		setCategory(selectedCategory.CategoryID);
+		category = selectedCategory;
+		setCategory(category.CategoryID);
 	}
 
 	public void setCategory(Integer c) {
@@ -59,6 +74,9 @@ public class Entry extends Entity {
 			c = null;
 		}
 		CategoryID = c;
+		if (category == null) {
+			category = getCategory();
+		}
 	}
 
 	public Integer getEntryID() {

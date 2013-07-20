@@ -10,10 +10,13 @@ import java.util.List;
 import phonebook.Application;
 
 /**
- *
  * @author S
  */
 public class SqlUtils {
+
+    public static void closeConnection() throws SQLException {
+        Application.connection().close();
+    }
 
     public static int insert(Object query) {
         try {
@@ -22,7 +25,9 @@ public class SqlUtils {
             statement.executeUpdate(sql);
             ResultSet rs = statement.executeQuery("select last_insert_rowid()");
             rs.next();
-            return rs.getInt(1);
+            int id = rs.getInt(1);
+//            closeConnection();
+            return id;
         } catch (SQLException ex) {
             Application.handleException(ex);
         }
@@ -34,16 +39,18 @@ public class SqlUtils {
         try {
             Statement statement = Application.connection().createStatement();
             statement.executeUpdate(sql);
+//            closeConnection();
         } catch (SQLException ex) {
             Application.handleException(ex);
         }
     }
 
-    public static ResultSet getResultSet(Object query) {
+    public static ResultSet executeQuery(Object query) {
         ResultSet rs = null;
         try {
             Statement statement = Application.connection().createStatement();
             rs = statement.executeQuery(query.toString());
+//            closeConnection();
         } catch (SQLException ex) {
             Application.handleException(ex);
         }
@@ -52,7 +59,7 @@ public class SqlUtils {
 
     public static Object getCell(Object query) {
         try {
-            ResultSet rs = getResultSet(query);
+            ResultSet rs = executeQuery(query);
             if (rs.next()) {
                 return rs.getObject(1);
             }

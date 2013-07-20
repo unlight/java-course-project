@@ -38,7 +38,7 @@ abstract public class Model<T> {
 		SelectQuery sql = new SelectQuery()
 				.addFrom(name)
 				.addWhere(this.primaryKey + " = " + id);
-		ResultSet resultSet = SqlUtils.getResultSet(sql);
+		ResultSet resultSet = SqlUtils.executeQuery(sql);
 		T entity = null;
 		try {
 			resultSet.next();
@@ -53,7 +53,7 @@ abstract public class Model<T> {
 	public List<T> get() {
 		SelectQuery sql = new SelectQuery()
 				.addFrom(name);
-		ResultSet resultSet = SqlUtils.getResultSet(sql);
+		ResultSet resultSet = SqlUtils.executeQuery(sql);
 		ArrayList result = new ArrayList();
 		if (resultSet != null) {
 			try {

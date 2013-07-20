@@ -6,12 +6,13 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
 public class StringUtils {
-	
+
 	public static String randomPhone() {
 		StringBuffer sb = new StringBuffer(10);
 		Random generator = new Random();
@@ -25,27 +26,30 @@ public class StringUtils {
 		sb.append(10 + generator.nextInt(90));
 		return sb.toString();
 	}
-	
+
 	public static Date randomDate() {
 		Random generator = new Random();
-		Date now = new Date();
-		int year = 1970 + generator.nextInt(now.getYear() - 70); // 1900
+		int year = Calendar.getInstance().get(Calendar.YEAR) - generator.nextInt(20) - generator.nextInt(20);
 		int month = generator.nextInt(12);
 		int day = generator.nextInt(28);
 		Date result = new Date(year, month, day);
 		return result;
 	}
-	
+
 	public static String loremWord() {
 		String s = loremParagraph();
 		String[] split = s.split("( |,|\\.|\\?|;|\\:)");
-		Random generator = new Random(); 
+		Random generator = new Random();
 		int index = generator.nextInt(split.length);
 		if (index >= split.length) {
 			index = split.length - 1;
 		}
 		s = split[index];
-		char first = Character.toUpperCase(s.charAt(0));
+		char first = 0;
+		try {
+			first = Character.toUpperCase(s.charAt(0));
+		} catch (StringIndexOutOfBoundsException e) {
+		}
 		s = first + s.substring(1);
 		return s;
 	}
@@ -71,7 +75,9 @@ public class StringUtils {
 			html = sb.toString();
 		} catch (IOException ex) {
 		}
-		if ("".equals(html)) return "";
+		if ("".equals(html)) {
+			return "";
+		}
 		html = html.replaceAll("\\<.*?\\>", "");
 		return html;
 	}

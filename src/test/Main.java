@@ -8,6 +8,6 @@ import utils.StringUtils;
 public class Main {
 
 	public static void main(String[] args) {
-		String s = StringUtils.loremWord();
+		StringUtils.randomDate();
 	}
 }

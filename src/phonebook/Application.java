@@ -10,7 +10,7 @@ import utils.StringUtils;
 public class Application {
 
     private String name = "Phonebook";
-    private String version = "1.1.2";
+    private String version = "1.1.3";
     private String datafile = "./phonebook.dat";
     private Connection connection;
     public MainFrame frame;
@@ -66,16 +66,16 @@ public class Application {
         return connection;
     }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	void setMainFrame(MainFrame f) {
-		frame = f;
-		frame.setTitle(StringUtils.join(new String[]{name, version}, " "));
-	}
+    void setMainFrame(MainFrame f) {
+        frame = f;
+        frame.setTitle(StringUtils.join(new String[]{name, version}, " "));
+    }
 }

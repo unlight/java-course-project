@@ -1,5 +1,6 @@
 package phonebook;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.UIManager;
@@ -10,24 +11,25 @@ import phonebook.model.EntryModel;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-	public MainFrame() {
-		initComponents();
-		postInit();
-	}
+    public MainFrame() {
+        initComponents();
+        postInit();
+    }
 
-	private void postInit() {
-		final MainFrame frame = this;
-		addEntryMenuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddEntryDialog(frame, false).setVisible(true);
-			}
-		});
-		entryTable.setModel(new EntryTableModel());
-		entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
-	}
+    private void postInit() {
+        final MainFrame frame = this;
+        addEntryMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddEntryDialog(frame, false).setVisible(true);
+            }
+        });
+        entryTable.setModel(new EntryTableModel());
+        entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
+		entryTable.setIntercellSpacing(new Dimension(5, 5));
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     private void initComponents() {//GEN-BEGIN:initComponents
 
         mainScrollPane = new javax.swing.JScrollPane();
@@ -106,37 +108,37 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-END:initComponents
 
     private void entryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entryTableMouseClicked
-		if (evt.getClickCount() == 2) {
-			EntryTable target = (EntryTable) evt.getSource();
-			int rowID = target.getEntityId();
-			openEditWindow(rowID);
-		}
+        if (evt.getClickCount() == 2) {
+            EntryTable target = (EntryTable) evt.getSource();
+            int rowID = target.getEntityId();
+            openEditWindow(rowID);
+        }
     }//GEN-LAST:event_entryTableMouseClicked
 
     private void editEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEntryMenuItemActionPerformed
-		int rowID = ((EntryTable) entryTable).getEntityId();
-		openEditWindow(rowID);
+        int rowID = ((EntryTable) entryTable).getEntityId();
+        openEditWindow(rowID);
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
     private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed
-		new RemoveEntryActionListener().actionPerformed(evt);
+        new RemoveEntryActionListener().actionPerformed(evt);
     }//GEN-LAST:event_removeEntryMenuItemActionPerformed
 
-	private void openEditWindow(int id) {
-		new EditEntryDialog(id, this, false).setVisible(true);
-	}
+    private void openEditWindow(int id) {
+        new EditEntryDialog(id, this, false).setVisible(true);
+    }
 
-	public static void main(String args[]) {
-		Application application = Application.getInstance();
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		MainFrame frame = new MainFrame();
-		application.setMainFrame(frame);
-		frame.setVisible(true);
-	}
+    public static void main(String args[]) {
+        Application application = Application.getInstance();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MainFrame frame = new MainFrame();
+        application.setMainFrame(frame);
+        frame.setVisible(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem addEntryMenuItem;
