@@ -27,6 +27,5 @@ public class PicturePanel extends JPanel {
             g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
             setBorder(new LineBorder(Color.GRAY));
         }
-        // ?: Почему постоянно вызывается paint() здесь.
     }
 }

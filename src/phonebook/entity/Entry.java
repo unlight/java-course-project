@@ -1,9 +1,11 @@
 package phonebook.entity;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import phonebook.Application;
 import phonebook.model.CategoryModel;
+import phonebook.model.PictureModel;
 
 /**
  * @author S
@@ -16,6 +18,8 @@ public class Entry extends Entity {
 	public String Phone;
 	public Date BirthDate;
 	protected Integer CategoryID;
+	protected Integer PictureID = null;
+	protected Picture Picture = null;
 
 	@Override
 	public void attachResultSet(ResultSet set) {
@@ -26,6 +30,11 @@ public class Entry extends Entity {
 			BirthDate = Date.fromString(set.getString("BirthDate"));
 			Phone = set.getString("Phone");
 			setCategory(set.getInt("CategoryID"));
+			Integer x = set.getInt("PictureID");
+			if (x == 0) {
+				x = null;
+			}
+			setPictureID(x);
 		} catch (SQLException ex) {
 			Application.handleException(ex);
 		}
@@ -50,10 +59,9 @@ public class Entry extends Entity {
 	public Integer getCategoryID() {
 		return CategoryID;
 	}
-	
 	private CategoryModel categoryModel;
 	private Category category;
-	
+
 	public Category getCategory() {
 		if (categoryModel == null) {
 			categoryModel = new CategoryModel();
@@ -66,7 +74,9 @@ public class Entry extends Entity {
 
 	public void setCategory(Category selectedCategory) {
 		category = selectedCategory;
-		setCategory(category.CategoryID);
+		if (category != null) {
+			setCategory(category.CategoryID);			
+		}
 	}
 
 	public void setCategory(Integer c) {
@@ -85,5 +95,40 @@ public class Entry extends Entity {
 
 	public void setEntryID(Integer EntryID) {
 		this.EntryID = EntryID;
+	}
+	PictureModel pictureModel = new PictureModel();
+
+	public Integer getPictureID() {
+		if (getPicture() != null) {
+			return getPicture().getPictureID();
+		}
+		return null;
+	}
+
+	public Picture getPicture() {
+		if (Picture == null && PictureID != null) {
+			System.out.println("getPicture " + PictureID);
+			Picture = pictureModel.getId(PictureID);
+		}
+		return Picture;
+	}
+
+	public void setPicture(Picture picture) {
+		this.Picture = picture;
+	}
+
+	private void setPictureID(Integer aInt) {
+		PictureID = aInt;
+	}
+
+	public File getPictureFile() {
+		if (getPicture() != null) {
+			return getPicture().getFile();
+		}
+		return null;
+	}
+
+	public void reset() {
+		setPicture(null);
 	}
 }

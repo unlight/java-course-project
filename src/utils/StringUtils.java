@@ -13,6 +13,22 @@ import java.util.Random;
 
 public class StringUtils {
 
+	public static final String getExtension(Object f) {
+		if (f == null) {
+			return null;
+		}
+		String filename = f.toString();
+		final String afterLastSlash = filename.substring(filename.lastIndexOf('/') + 1);
+		final int afterLastBackslash = afterLastSlash.lastIndexOf('\\') + 1;
+		final int dotIndex = afterLastSlash.indexOf('.', afterLastBackslash);
+		return (dotIndex == -1) ? "" : afterLastSlash.substring(dotIndex + 1);
+	}
+
+	public static String randomPicture(int width, int height, String category) {
+//		http://lorempixel.com/120/160/people/
+		return null;
+	}
+
 	public static String randomPhone() {
 		StringBuffer sb = new StringBuffer(10);
 		Random generator = new Random();
@@ -29,7 +45,7 @@ public class StringUtils {
 
 	public static Date randomDate() {
 		Random generator = new Random();
-		int year = Calendar.getInstance().get(Calendar.YEAR) - generator.nextInt(20) - generator.nextInt(20);
+		int year = 1970 + generator.nextInt(30);
 		int month = generator.nextInt(12);
 		int day = generator.nextInt(28);
 		Date result = new Date(year, month, day);
@@ -46,9 +62,9 @@ public class StringUtils {
 		}
 		s = split[index];
 		char first = 0;
-		first = Character.toUpperCase(s.charAt(0));
 		try {
-			s = first + s.substring(1);			
+			first = Character.toUpperCase(s.charAt(0));
+			s = first + s.substring(1);
 		} catch (StringIndexOutOfBoundsException e) {
 			s = "None";
 		}

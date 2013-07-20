@@ -86,8 +86,8 @@ public class Structure {
             if (isFirstRun) {
                 SqlUtils.insert("insert into Category(CategoryID, Name) values(0, '')");
             }
-            if (!connection.getAutoCommit()) {
-                connection.commit();
+            if (!Application.connection().getAutoCommit()) {
+                Application.connection().commit();
             }
         } catch (SQLException ex) {
             Application.handleException(ex);

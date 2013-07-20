@@ -1,20 +1,14 @@
 package phonebook;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import net.iharder.dnd.FileDrop;
-import phonebook.entity.Category;
 import phonebook.entity.Date;
 import phonebook.entity.Entry;
-import phonebook.model.CategoryModel;
+import phonebook.entity.Picture;
 import phonebook.model.EntryModel;
 import utils.StringUtils;
 
@@ -24,7 +18,7 @@ import utils.StringUtils;
 public class AddEntryDialog extends JDialog implements ActionListener {
 
 	PictureMouseClickListener pictureMouseClickListener;
-	private File pictureFile;
+	private Picture picture;
 	private Entry data;
 	private CategoryComboBoxModel categoryComboBoxModel;
 
@@ -41,6 +35,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		phoneNumberTextField.setText(data.getPhone());
 		birthDateField.setValue(data.getBirthDate());
 		categoryComboBoxModel.setSelectedItem(entry.getCategoryID());
+		setPicture(data.getPicture());
 	}
 
 	protected Entry getData() {
@@ -51,9 +46,43 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		data.FirstName = firstNameTextField.getText();
 		data.Phone = phoneNumberTextField.getText();
 		data.BirthDate = new Date((java.util.Date) birthDateField.getValue());
-		System.out.println("categoryComboBoxModel.getSelectedCategory(): " + categoryComboBoxModel.getSelectedCategory());
 		data.setCategory(categoryComboBoxModel.getSelectedCategory());
+		data.setPicture(getPicture());
 		return data;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setVisible(true);
+	}
+
+	public File getPictureFile() {
+		if (getPicture() != null) {
+			File result = getPicture().getIncomingFileObject();
+			if (result == null) {
+				result = getPicture().getFile();
+			}
+			return result;
+		}
+		return null;
+	}
+
+	private Picture getPicture() {
+		return picture;
+	}
+
+	public void setPictureFile(File file) {
+		if (picture == null) {
+			picture = new Picture();
+		}
+		picture.setFile(file);
+		picture.setIncomingFileObject(file);
+		setPicture(picture);
+	}
+
+	public void setPicture(Picture picture) {
+		this.picture = picture;
+		picturePanel.repaint();
 	}
 
 	private void postInit() {
@@ -65,8 +94,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 	}
 
 	@SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         lastnameLabel = new javax.swing.JLabel();
         firstNameLabel = new javax.swing.JLabel();
@@ -78,7 +106,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         phoneNumberTextField = new javax.swing.JTextField();
         birthDateField = new net.sf.nachocalendar.components.DateField();
         cancelButton = new javax.swing.JButton();
-        picturePanel = new javax.swing.JPanel();
+        picturePanel = new PicturePanel(this);
         testDataButton = new javax.swing.JButton();
         categoryComboBox = new CategoryComboBox();
         categoryLabel = new javax.swing.JLabel();
@@ -224,7 +252,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 		EntryModel EntryModel = new EntryModel();
@@ -276,24 +304,4 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     protected javax.swing.JButton saveButton;
     private javax.swing.JButton testDataButton;
     // End of variables declaration//GEN-END:variables
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		setVisible(true);
-	}
-
-	/**
-	 * @return the pictureFile
-	 */
-	public File getPictureFile() {
-		return pictureFile;
-	}
-
-	/**
-	 * @param pictureFile the pictureFile to set
-	 */
-	public void setPictureFile(File pictureFile) {
-		this.pictureFile = pictureFile;
-		picturePanel.repaint();
-	}
 }

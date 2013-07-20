@@ -14,7 +14,6 @@ abstract public class Model<T> {
 
 	protected String name;
 	protected String primaryKey;
-	protected PreparedStatement pstatement;
 
 	public Model(String name) {
 		this.name = name;
@@ -44,6 +43,7 @@ abstract public class Model<T> {
 			resultSet.next();
 			entity = (T) Class.forName("phonebook.entity." + name).newInstance();
 			((Entity) entity).attachResultSet(resultSet);
+//			resultSet.close();
 		} catch (Exception ex) {
 			Application.handleException(ex);
 		}

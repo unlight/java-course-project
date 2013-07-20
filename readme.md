@@ -10,11 +10,8 @@ QUESIONS
 
 TODO
 ----
-- save photo to database
-- validating while adding
-- check for errors while adding/editing
-- editing select photo
-- adding (save to database)
 - sorting
+- check for errors while adding/editing
+- category add/edit
 - use rowinserted in fireTableDataChanged
-- show category in entry table
+- bug: (save photo to database) no update photo after select new

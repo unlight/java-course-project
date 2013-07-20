@@ -41,7 +41,6 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 
 	public void setSelectedItem(Category anObject) {
 		selected = anObject;
-		System.out.println("setSelectedItem: " + anObject);
 	}
 
 	public Category getSelectedCategory() {
@@ -61,7 +60,6 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 
 	@Override
 	public void setSelectedItem(Object anItem) {
-		System.out.println("setSelectedItem: " + anItem);
 		if (anItem == null) {
 			anItem = 0;
 		}
