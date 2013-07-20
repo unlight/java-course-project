@@ -33,7 +33,6 @@ public class SqlUtils {
         String sql = query.toString();
         try {
             Statement statement = Application.connection().createStatement();
-            System.out.println(sql);
             statement.executeUpdate(sql);
         } catch (SQLException ex) {
             Application.handleException(ex);

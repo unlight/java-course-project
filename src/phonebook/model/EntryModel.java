@@ -18,7 +18,6 @@ public class EntryModel extends Model<Entry> {
         InsertQuery query = new InsertQuery(name)
                 .columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID", "DateInserted", "DateUpdated")
                 .values(entity.FirstName, entity.LastName, entity.Phone, entity.BirthDate, entity.CategoryID, "@datetime('Now')", "@datetime('Now')");
-        System.out.println(query);
         return SqlUtils.insert(query);
     }
 

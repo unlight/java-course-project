@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.ArrayList;
+import utils.SqlUtils;
 
 public class Structure {
 
@@ -83,6 +84,7 @@ public class Structure {
                 }
             }
             if (isFirstRun) {
+                SqlUtils.insert("insert into Category(CategoryID, Name) values(0, '')");
             }
             if (!connection.getAutoCommit()) {
                 connection.commit();

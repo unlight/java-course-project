@@ -80,7 +80,6 @@ abstract public class Model<T> {
 	public void delete(int rowId) {
 		DeleteQuery dq = new DeleteQuery(name)
 				.addWhere(this.primaryKey + " = " + rowId);
-		System.out.println(dq);
 		SqlUtils.update(dq);
 	}
 

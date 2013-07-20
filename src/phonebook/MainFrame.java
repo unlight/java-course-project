@@ -1,5 +1,7 @@
 package phonebook;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.UIManager;
 import phonebook.model.EntryModel;
 
@@ -10,11 +12,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
-        initEvents();
+        postInit();
     }
 
-    private void initEvents() {
-        addEntryMenuItem.addActionListener(new AddEntryDialog(this, false));
+    private void postInit() {
+		final MainFrame frame = this;
+		addEntryMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddEntryDialog(frame, false).setVisible(true);
+			}
+		});
         entryTable.setModel(new EntryTableModel());
         entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
     }
@@ -112,16 +120,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
     private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed
-        EntryModel entryModel = new EntryModel();
-        int entityId = ((EntryTable) entryTable).getEntityId();
-        entryModel.delete(entityId);
-        int tableRowId = entryTable.getSelectedRow();
-//        entryTable.getModel()
-        ((EntryTableModel) entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+        new RemoveEntryActionListener().actionPerformed(evt);
     }//GEN-LAST:event_removeEntryMenuItemActionPerformed
 
     private void openEditWindow(int id) {
-        System.out.println(id);
         new EditEntryDialog(id, this, false).setVisible(true);
     }
 

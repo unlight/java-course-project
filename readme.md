@@ -11,8 +11,10 @@ QUESIONS
 TODO
 ----
 - save photo to database
+- validating while adding
 - check for errors while adding/editing
 - editing select photo
 - adding (save to database)
 - select category
 - sorting
+- use rowinserted in fireTableDataChanged

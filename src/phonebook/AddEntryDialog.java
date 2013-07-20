@@ -5,13 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import net.iharder.dnd.FileDrop;
+import phonebook.entity.Category;
 import phonebook.entity.Date;
 import phonebook.entity.Entry;
+import phonebook.model.CategoryModel;
 import phonebook.model.EntryModel;
 import utils.StringUtils;
 
@@ -57,6 +60,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         pictureMouseClickListener = new PictureMouseClickListener(this);
         picturePanel.addMouseListener(pictureMouseClickListener);
         new FileDrop(picturePanel, new FileDropListener(this));
+		categoryComboBox.setModel(new CategoryComboBoxModel());
     }
 
     @SuppressWarnings("unchecked")
@@ -77,6 +81,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         testDataButton = new javax.swing.JButton();
         categoryComboBox = new CategoryComboBox();
         categoryLabel = new javax.swing.JLabel();
+        removeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Новая запись");
@@ -130,10 +135,15 @@ public class AddEntryDialog extends JDialog implements ActionListener {
             }
         });
 
-        categoryComboBox.setModel(new CategoryComboBoxModel());
-
         categoryLabel.setText("Категория:");
         categoryLabel.setPreferredSize(new java.awt.Dimension(90, 20));
+
+        removeButton.setText("Удалить");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,12 +175,14 @@ public class AddEntryDialog extends JDialog implements ActionListener {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(saveButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelButton)))
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(removeButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(picturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                    .addComponent(picturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 30, Short.MAX_VALUE)
+                        .addGap(0, 29, Short.MAX_VALUE)
                         .addComponent(testDataButton)))
                 .addContainerGap())
         );
@@ -205,7 +217,8 @@ public class AddEntryDialog extends JDialog implements ActionListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(testDataButton)
                     .addComponent(saveButton)
-                    .addComponent(cancelButton))
+                    .addComponent(cancelButton)
+                    .addComponent(removeButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,7 +235,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
             EntryTableModel entryTableModel = (EntryTableModel) ((MainFrame) getParent()).entryTable.getModel();
 //            int firstRow = entryTableModel.getRowCount();
 //            int lastRow = firstRow + 1;
-            entryTableModel.fireTableDataChanged(); // todo: use rowinserted.
+            entryTableModel.fireTableDataChanged();
         }
 		dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
@@ -242,6 +255,11 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		((JButton)evt.getSource()).setEnabled(false);
     }//GEN-LAST:event_testDataButtonActionPerformed
 
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        new RemoveEntryActionListener().actionPerformed(evt);
+		dispose();
+    }//GEN-LAST:event_removeButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JLabel birthdateLabel;
@@ -255,6 +273,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     private javax.swing.JLabel phoneLabel;
     private javax.swing.JTextField phoneNumberTextField;
     private javax.swing.JPanel picturePanel;
+    private javax.swing.JButton removeButton;
     protected javax.swing.JButton saveButton;
     private javax.swing.JButton testDataButton;
     // End of variables declaration//GEN-END:variables
