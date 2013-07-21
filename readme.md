@@ -10,6 +10,7 @@ QUESIONS
 
 TODO
 ----
+- default view in descending mode
 - sorting
 - check for errors while adding/editing
 - category add/edit

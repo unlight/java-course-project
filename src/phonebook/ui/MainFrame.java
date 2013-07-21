@@ -3,6 +3,7 @@ package phonebook.ui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import phonebook.Application;
 import phonebook.DateCellRenderer;
@@ -31,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
         entryTable.setModel(new EntryTableModel());
         entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
 		entryTable.setIntercellSpacing(new Dimension(5, 5));
+		entryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     @SuppressWarnings("unchecked")

@@ -68,6 +68,9 @@ public class PictureModel extends Model<Picture> {
 	}
 	
 	public void delete(Picture p) {
+		if (p == null) {
+			return;
+		}
 		File file = p.getFileObject();
 		if (file.exists()) {
 			file.delete();
