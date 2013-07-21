@@ -1,7 +1,11 @@
-package phonebook;
+package phonebook.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.UIManager;
-import phonebook.model.EntryModel;
+import phonebook.Application;
+import phonebook.EntryTableModel;
+import phonebook.listener.RemoveEntryActionListener;
 
 /**
  * @author S
@@ -10,18 +14,21 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
-        initEvents();
+        postInit();
     }
 
-    private void initEvents() {
-        addEntryMenuItem.addActionListener(new AddEntryDialog(this, false));
-        entryTable.setModel(new EntryTableModel());
-        entryTable.getColumnModel().getColumn(3).setCellRenderer(new DateCellRenderer());
+    private void postInit() {
+        final MainFrame frame = this;
+        addEntryMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddEntryDialog(frame, false).setVisible(true);
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() {//GEN-BEGIN:initComponents
 
         mainScrollPane = new javax.swing.JScrollPane();
         entryTable = new EntryTable(new EntryTableModel());
@@ -96,7 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void entryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entryTableMouseClicked
         if (evt.getClickCount() == 2) {
@@ -112,16 +119,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
     private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed
-        EntryModel entryModel = new EntryModel();
-        int entityId = ((EntryTable) entryTable).getEntityId();
-        entryModel.delete(entityId);
-        int tableRowId = entryTable.getSelectedRow();
-//        entryTable.getModel()
-        ((EntryTableModel) entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+        new RemoveEntryActionListener().actionPerformed(evt);
     }//GEN-LAST:event_removeEntryMenuItemActionPerformed
 
     private void openEditWindow(int id) {
-        System.out.println(id);
         new EditEntryDialog(id, this, false).setVisible(true);
     }
 
@@ -133,12 +134,8 @@ public class MainFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
         MainFrame frame = new MainFrame();
-        application.frame = frame;
+        application.setMainFrame(frame);
         frame.setVisible(true);
-//	  frame.setTitle(this.name + " " + version);
-//	  frame.pack();
-//	  frame.setVisible(true);
-//	  frame.addWindowListener(new ApplicationWindowListener(this));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;

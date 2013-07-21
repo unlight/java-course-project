@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.ArrayList;
+import utils.SqlUtils;
 
 public class Structure {
 
@@ -40,8 +41,8 @@ public class Structure {
     }
 
     public ResultSet query(String sql) throws SQLException {
-        ResultSet resultSet = connection.createStatement().executeQuery(sql);
-        return resultSet;
+        ResultSet result = SqlUtils.executeQuery(sql);
+        return result;
     }
 
     public ArrayList<String> getColumns(String table) {
@@ -83,9 +84,10 @@ public class Structure {
                 }
             }
             if (isFirstRun) {
+                SqlUtils.insert("insert into Category(CategoryID, Name) values(0, '')");
             }
-            if (!connection.getAutoCommit()) {
-                connection.commit();
+            if (!Application.connection().getAutoCommit()) {
+                Application.connection().commit();
             }
         } catch (SQLException ex) {
             Application.handleException(ex);

@@ -3,6 +3,7 @@ package phonebook.model;
 import com.github.sqlbuilder.InsertQuery;
 import com.github.sqlbuilder.UpdateQuery;
 import phonebook.entity.Entry;
+import phonebook.entity.Picture;
 import utils.SqlUtils;
 
 /**
@@ -10,37 +11,49 @@ import utils.SqlUtils;
  */
 public class EntryModel extends Model<Entry> {
 
-    public EntryModel() {
-        super("Entry");
-    }
+	public EntryModel() {
+		super("Entry");
+	}
 
-    @Override
-    public Integer save(Entry entity) {
-        if (entity.EntryID == null) {
-            return this.insert(entity);
-        } else {
-            this.update(entity);
-            return entity.EntryID;
-        }
-    }
+	@Override
+	public Integer insert(Entry entity) {
+		InsertQuery query = new InsertQuery(name)
+				.columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID", "DateInserted", "DateUpdated")
+				.values(entity.getFirstName(), entity.getLastName(), entity.getPhone(), entity.getBirthDate(), entity.getCategoryID(), "@datetime('Now')", "@datetime('Now')");
+		return SqlUtils.insert(query);
+	}
+	PictureModel pictureModel = new PictureModel();
 
-    private Integer insert(Entry entity) {
-        InsertQuery query = new InsertQuery(name)
-                .columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID", "DateInserted", "DateUpdated")
-                .values(entity.FirstName, entity.LastName, entity.Phone, entity.BirthDate, entity.CategoryID, "@datetime('Now')", "@datetime('Now')");
-        System.out.println(query);
-        return SqlUtils.insert(query);
-    }
-
-    private void update(Entry entity) {
-        UpdateQuery query = new UpdateQuery(name)
-                .set("FirstName", entity.FirstName)
-                .set("LastName", entity.LastName)
-                .set("Phone", entity.Phone)
-                .set("BirthDate", entity.BirthDate.toString())
-                .set("CategoryID", entity.CategoryID.toString())
-                .set("DateUpdated", "@datetime('Now')")
-                .addWhere("EntryID = " + entity.EntryID);
-        SqlUtils.update(query);
-    }
+	@Override
+	public void update(Entry entity) {
+		SqlUtils.transaction();
+		Picture picture = entity.getPicture();
+		Integer pictureID = null;
+		if (picture != null) {
+			picture.setEntryID(entity.getEntryID());
+			pictureID = pictureModel.save(picture);
+		}
+		UpdateQuery query = new UpdateQuery(name)
+				.set("FirstName", entity.getFirstName())
+				.set("LastName", entity.getLastName())
+				.set("Phone", entity.getPhone())
+				.set("BirthDate", entity.getBirthDate().toString())
+				.set("CategoryID", entity.getCategoryID())
+				.set("DateUpdated", "@datetime('Now')")
+				.set("PictureID", pictureID)
+				.addWhere("EntryID = " + entity.getEntryID());
+		System.out.println("EntryModel.update: " + query);
+		SqlUtils.update(query);
+		SqlUtils.commit();
+	}
+	
+	@Override
+	public void delete(int id) {
+		SqlUtils.transaction();
+		Entry entry = this.getId(id);
+		Picture picture = entry.getPicture();
+		pictureModel.delete(picture);
+		super.delete(id);
+		SqlUtils.commit();
+	}
 }

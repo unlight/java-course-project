@@ -1,6 +1,6 @@
 package phonebook.entity;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import phonebook.Application;
 
@@ -9,15 +9,16 @@ import phonebook.Application;
  */
 abstract public class Entity {
 
-    public abstract void attachResultSet(ResultSet set);
+	public abstract void attachResultSet(ResultSet set);
 
-    public Object getProperty(String s) {
-        try {
-            Field field = getClass().getDeclaredField(s);
-            return field.get(this);
-        } catch (Exception ex) {
-            Application.handleException(ex);
-        }
-        return null;
-    }
+	public Object getProperty(String s) {
+		try {
+			Method declaredMethod = getClass().getDeclaredMethod("get" + s);
+			Object invoke = declaredMethod.invoke(this);
+			return invoke;
+		} catch (Exception ex) {
+			Application.handleException(ex);
+		}
+		return null;
+	}
 }

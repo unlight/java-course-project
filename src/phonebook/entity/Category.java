@@ -9,16 +9,21 @@ import phonebook.Application;
  */
 public class Category extends Entity {
 
-    public Integer CategoryID;
-    public String Name;
+	public Integer CategoryID;
+	public String Name;
 
-    @Override
-    public void attachResultSet(ResultSet set) {
-        try {
-            CategoryID = set.getInt("CategoryID");
-            Name = set.getString("Name");
-        } catch (SQLException ex) {
-            Application.handleException(ex);
-        }
-    }
+	@Override
+	public void attachResultSet(ResultSet set) {
+		try {
+			CategoryID = set.getInt("CategoryID");
+			Name = set.getString("Name");
+		} catch (SQLException ex) {
+			Application.handleException(ex);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return Name;
+	}
 }
