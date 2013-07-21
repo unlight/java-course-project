@@ -14,4 +14,3 @@ TODO
 - check for errors while adding/editing
 - category add/edit
 - use rowinserted in fireTableDataChanged
-- bug: (save photo to database) no update photo after select new

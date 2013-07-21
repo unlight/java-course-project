@@ -67,6 +67,10 @@ public class Picture extends Entity {
 	public File getIncomingFileObject() {
 		return incomingFileObject;
 	}
+	
+	public File getFileObject() {
+		return fileObject;
+	}
 
 	public void setFile(File newFile) {
 		this.fileObject = newFile;

@@ -47,4 +47,14 @@ public class EntryModel extends Model<Entry> {
 		SqlUtils.update(query);
 		SqlUtils.commit();
 	}
+	
+	@Override
+	public void delete(int id) {
+		SqlUtils.transaction();
+		Entry entry = this.getId(id);
+		Picture picture = entry.getPicture();
+		pictureModel.delete(picture);
+		super.delete(id);
+		SqlUtils.commit();
+	}
 }

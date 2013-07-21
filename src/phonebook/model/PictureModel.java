@@ -18,11 +18,11 @@ import utils.StringUtils;
  * @author S
  */
 public class PictureModel extends Model<Picture> {
-
+	
 	public PictureModel() {
 		super("Picture");
 	}
-
+	
 	@Override
 	public Integer insert(Picture entity) {
 		InsertQuery query = new InsertQuery(name)
@@ -31,7 +31,7 @@ public class PictureModel extends Model<Picture> {
 		System.out.println("PictureModel.insert: " + query);
 		return SqlUtils.insert(query);
 	}
-
+	
 	@Override
 	public void update(Picture entity) {
 		UpdateQuery query = new UpdateQuery(name)
@@ -41,13 +41,13 @@ public class PictureModel extends Model<Picture> {
 		System.out.println("PictureModel.update: " + query);
 		SqlUtils.update(query);
 	}
-
+	
 	@Override
 	public Integer save(Picture entity) {
 		saveFile(entity);
 		return super.save(entity);
 	}
-
+	
 	protected void saveFile(Picture entity) {
 		File incomingFile = entity.getIncomingFileObject();
 		Integer entryID = entity.getEntryID();
@@ -63,5 +63,19 @@ public class PictureModel extends Model<Picture> {
 		}
 		entity.setFile(newFile);
 		entity.setIncomingFileObject(newFile);
+	}
+	
+	@Override
+	public void delete(int id) {
+		Picture p = this.getId(id);
+		delete(p);
+	}
+	
+	public void delete(Picture p) {
+		File file = p.getFileObject();
+		if (file.exists()) {
+			file.delete();
+		}
+		super.delete(p.getPictureID());
 	}
 }

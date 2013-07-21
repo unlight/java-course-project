@@ -83,6 +83,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 	public void setPicture(Picture picture) {
 		this.picture = picture;
 		picturePanel.repaint();
+		picturePanel.updateUI();
 	}
 
 	private void postInit() {
