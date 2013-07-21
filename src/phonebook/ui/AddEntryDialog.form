@@ -225,6 +225,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="categoryComboBox">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CategoryComboBox()"/>
       </AuxValues>

@@ -171,6 +171,8 @@ public class AddEntryDialog extends JDialog implements ActionListener {
             }
         });
 
+        categoryComboBox.setEditable(true);
+
         categoryLabel.setText("Категория:");
         categoryLabel.setPreferredSize(new java.awt.Dimension(90, 20));
 

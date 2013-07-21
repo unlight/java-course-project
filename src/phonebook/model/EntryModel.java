@@ -2,6 +2,7 @@ package phonebook.model;
 
 import com.github.sqlbuilder.InsertQuery;
 import com.github.sqlbuilder.UpdateQuery;
+import phonebook.entity.Category;
 import phonebook.entity.Entry;
 import phonebook.entity.Picture;
 import utils.SqlUtils;
@@ -13,6 +14,14 @@ public class EntryModel extends Model<Entry> {
 
 	public EntryModel() {
 		super("Entry");
+	}
+
+	
+	@Override
+	public Integer save(Entry entry) {
+		Category category = entry.getCategory();
+		System.out.println("entry.getCategory xxx " + category);
+		return super.save(entry);
 	}
 
 	@Override

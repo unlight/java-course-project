@@ -20,6 +20,8 @@ public class Entry extends Entity {
 	protected Integer CategoryID;
 	protected Integer PictureID = null;
 	protected Picture Picture = null;
+	CategoryModel categoryModel = new CategoryModel();
+	private Category category;
 
 	@Override
 	public void attachResultSet(ResultSet set) {
@@ -59,13 +61,8 @@ public class Entry extends Entity {
 	public Integer getCategoryID() {
 		return CategoryID;
 	}
-	private CategoryModel categoryModel;
-	private Category category;
 
 	public Category getCategory() {
-		if (categoryModel == null) {
-			categoryModel = new CategoryModel();
-		}
 		if (category == null && CategoryID != null) {
 			category = categoryModel.getId(CategoryID);
 		}
@@ -75,12 +72,13 @@ public class Entry extends Entity {
 	public void setCategory(Category selectedCategory) {
 		category = selectedCategory;
 		if (category != null) {
-			setCategory(category.CategoryID);			
+			System.out.println("category.CategoryID " + category.getCategoryID());
+			setCategory(category.getCategoryID());
 		}
 	}
 
 	public void setCategory(Integer c) {
-		if (c == 0) {
+		if (c != null && c == 0) {
 			c = null;
 		}
 		CategoryID = c;
