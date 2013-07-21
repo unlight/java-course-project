@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import net.iharder.dnd.FileDrop;
 import phonebook.CategoryComboBox;
 import phonebook.CategoryComboBoxModel;
-import phonebook.EntryTable;
 import phonebook.EntryTableModel;
 import phonebook.listener.FileDropListener;
 import phonebook.listener.PictureMouseClickListener;

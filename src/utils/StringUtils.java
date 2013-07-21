@@ -37,7 +37,9 @@ public class StringUtils {
 		int year = 1970 + generator.nextInt(30);
 		int month = generator.nextInt(12);
 		int day = generator.nextInt(28);
-		Date result = new Date(year, month, day);
+		Calendar cal = Calendar.getInstance();
+		cal.set(year, month, day, 0, 0, 0);
+		Date result = cal.getTime();
 		return result;
 	}
 

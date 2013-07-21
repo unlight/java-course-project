@@ -11,7 +11,8 @@ QUESIONS
 TODO
 ----
 - default view in descending mode
-- sorting
+- sorting [hold]
 - check for errors while adding/editing
 - category add/edit
 - use rowinserted in fireTableDataChanged
+- hide column

@@ -28,9 +28,9 @@ public class EntryModel extends Model<Entry> {
 	public void update(Entry entity) {
 		SqlUtils.transaction();
 		Picture picture = entity.getPicture();
-		picture.setEntryID(entity.getEntryID());
 		Integer pictureID = null;
 		if (picture != null) {
+			picture.setEntryID(entity.getEntryID());
 			pictureID = pictureModel.save(picture);
 		}
 		UpdateQuery query = new UpdateQuery(name)

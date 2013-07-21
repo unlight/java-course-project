@@ -3,7 +3,7 @@ package phonebook.listener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import phonebook.Application;
-import phonebook.EntryTable;
+import phonebook.ui.EntryTable;
 import phonebook.EntryTableModel;
 import phonebook.model.EntryModel;
 import phonebook.ui.MainFrame;
