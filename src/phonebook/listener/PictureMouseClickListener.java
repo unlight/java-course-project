@@ -1,5 +1,6 @@
-package phonebook;
+package phonebook.listener;
 
+import phonebook.ui.AddEntryDialog;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;

@@ -2,7 +2,6 @@ package phonebook.model;
 
 import com.github.sqlbuilder.InsertQuery;
 import com.github.sqlbuilder.UpdateQuery;
-import phonebook.Application;
 import phonebook.entity.Entry;
 import phonebook.entity.Picture;
 import utils.SqlUtils;

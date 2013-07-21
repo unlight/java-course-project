@@ -13,24 +13,13 @@ import java.util.Random;
 
 public class StringUtils {
 
-	public static final String getExtension(Object f) {
-		if (f == null) {
-			return null;
-		}
-		String filename = f.toString();
-		final String afterLastSlash = filename.substring(filename.lastIndexOf('/') + 1);
-		final int afterLastBackslash = afterLastSlash.lastIndexOf('\\') + 1;
-		final int dotIndex = afterLastSlash.indexOf('.', afterLastBackslash);
-		return (dotIndex == -1) ? "" : afterLastSlash.substring(dotIndex + 1);
-	}
-
 	public static String randomPicture(int width, int height, String category) {
 //		http://lorempixel.com/120/160/people/
 		return null;
 	}
 
 	public static String randomPhone() {
-		StringBuffer sb = new StringBuffer(10);
+		StringBuilder sb = new StringBuilder(10);
 		Random generator = new Random();
 		sb.append("(");
 		sb.append(100 + generator.nextInt(900));

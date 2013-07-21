@@ -1,5 +1,6 @@
-package phonebook;
+package phonebook.listener;
 
+import phonebook.ui.AddEntryDialog;
 import java.io.File;
 import net.iharder.dnd.FileDrop;
 
@@ -10,7 +11,7 @@ public class FileDropListener implements FileDrop.Listener {
 
     AddEntryDialog owner;
 
-    FileDropListener(AddEntryDialog owner) {
+    public FileDropListener(AddEntryDialog owner) {
         this.owner = owner;
     }
 

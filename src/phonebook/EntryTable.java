@@ -8,7 +8,7 @@ import phonebook.entity.Entry;
  */
 public class EntryTable extends JTable {
 
-    EntryTable(EntryTableModel entryTableModel) {
+    public EntryTable(EntryTableModel entryTableModel) {
         super(entryTableModel);
     }
 

@@ -1,10 +1,14 @@
-package phonebook;
+package phonebook.ui;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.UIManager;
-import phonebook.model.EntryModel;
+import phonebook.Application;
+import phonebook.DateCellRenderer;
+import phonebook.EntryTable;
+import phonebook.EntryTableModel;
+import phonebook.listener.RemoveEntryActionListener;
 
 /**
  * @author S

@@ -3,15 +3,11 @@ package phonebook.model;
 import com.github.sqlbuilder.InsertQuery;
 import com.github.sqlbuilder.UpdateQuery;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import phonebook.Application;
-import phonebook.entity.Entry;
 import phonebook.entity.Picture;
+import utils.FileUtils;
 import utils.SqlUtils;
-import utils.StringUtils;
 
 /**
  *
@@ -51,7 +47,7 @@ public class PictureModel extends Model<Picture> {
 	protected void saveFile(Picture entity) {
 		File incomingFile = entity.getIncomingFileObject();
 		Integer entryID = entity.getEntryID();
-		File newFile = new File("./pictures/" + entryID + "." + StringUtils.getExtension(incomingFile));
+		File newFile = new File("./pictures/" + entryID + "." + FileUtils.getExtension(incomingFile));
 		File picturesDirectory = new File(newFile.getParent());
 		if (!picturesDirectory.exists()) {
 			picturesDirectory.mkdirs();

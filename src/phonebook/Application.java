@@ -3,16 +3,14 @@ package phonebook;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import phonebook.ui.MainFrame;
 import utils.StringUtils;
 
 public class Application {
 
 	private String name = "Phonebook";
-	private String version = "1.1.3";
+	private String version = "1.2.0";
 	private String datafile = "./phonebook.dat";
 	private Connection connection;
 	public MainFrame frame;
@@ -83,7 +81,7 @@ public class Application {
 		return version;
 	}
 
-	void setMainFrame(MainFrame f) {
+	public void setMainFrame(MainFrame f) {
 		frame = f;
 		frame.setTitle(StringUtils.join(new String[]{name, version}, " "));
 	}
