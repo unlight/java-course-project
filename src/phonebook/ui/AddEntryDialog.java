@@ -3,12 +3,15 @@ package phonebook.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.border.EmptyBorder;
 import net.iharder.dnd.FileDrop;
 import phonebook.CategoryComboBox;
 import phonebook.CategoryComboBoxModel;
 import phonebook.EntryTableModel;
+import phonebook.LoremTextThread;
 import phonebook.listener.FileDropListener;
 import phonebook.listener.PictureMouseClickListener;
 import phonebook.listener.RemoveEntryActionListener;
@@ -98,6 +101,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		new FileDrop(picturePanel, new FileDropListener(this));
 		categoryComboBoxModel = new CategoryComboBoxModel();
 		categoryComboBox.setModel(categoryComboBoxModel);
+//		birthDateField.setBorder(BorderFactory.createCompoundBorder(birthDateField.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -285,8 +289,8 @@ public class AddEntryDialog extends JDialog implements ActionListener {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void testDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testDataButtonActionPerformed
-		lastNameTextField.setText(StringUtils.loremWord());
-		firstNameTextField.setText(StringUtils.loremWord());
+		new LoremTextThread(lastNameTextField).run();
+		new LoremTextThread(firstNameTextField).run();
 		birthDateField.setValue(StringUtils.randomDate());
 		phoneNumberTextField.setText(StringUtils.randomPhone());
 		((JButton) evt.getSource()).setEnabled(false);

@@ -10,7 +10,6 @@ QUESIONS
 
 TODO
 ----
-- lorem ipsum в отдельный поток
 - default view in descending mode
 - sorting [hold]
 - check for errors while adding/editing
