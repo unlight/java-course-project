@@ -40,10 +40,10 @@ abstract public class Model<T> {
 		ResultSet resultSet = SqlUtils.executeQuery(sql);
 		T entity = null;
 		try {
-			resultSet.next();
-			entity = (T) Class.forName("phonebook.entity." + name).newInstance();
-			((Entity) entity).attachResultSet(resultSet);
-//			resultSet.close();
+			if (resultSet.next()) {
+				entity = (T) Class.forName("phonebook.entity." + name).newInstance();
+				((Entity) entity).attachResultSet(resultSet);
+			}
 		} catch (Exception ex) {
 			Application.handleException(ex);
 		}
@@ -68,6 +68,15 @@ abstract public class Model<T> {
 		}
 		return result;
 	}
+    
+    public int getCountWhere(String field, int id) {
+		SelectQuery sql = new SelectQuery()
+				.addColumn("count(*) as count")
+				.addFrom(name)
+                .addWhere(field + " = " + id);
+		Object cell = SqlUtils.getCell(sql);
+		return Integer.parseInt(cell.toString());
+    }
 
 	public int getCount() {
 		SelectQuery sql = new SelectQuery()

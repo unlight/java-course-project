@@ -13,6 +13,7 @@ TODO
 - default view in descending mode
 - sorting [hold]
 - check for errors while adding/editing
-- category add/edit
 - use rowinserted in fireTableDataChanged
 - hide column
+- attach SwingX AutoCompleteDecorator to category field
+- open picture dialog open open in near directory

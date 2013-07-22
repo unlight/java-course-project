@@ -53,7 +53,7 @@ public class PictureModel extends Model<Picture> {
 			picturesDirectory.mkdirs();
 		}
 		try {
-			SqlUtils.copyFile(incomingFile, newFile);
+			FileUtils.copyFile(incomingFile, newFile);
 		} catch (IOException ex) {
 			Application.handleException(ex);
 		}

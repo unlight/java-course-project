@@ -22,7 +22,7 @@ public class PictureMouseClickListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        JFileChooser pictureFileChooser = new JFileChooser();
+        JFileChooser pictureFileChooser = new JFileChooser("./test-pictures");
         pictureFileChooser.setFileFilter(new FileNameExtensionFilter("Изображения", ImageIO.getReaderFileSuffixes()));
         int showDialog = pictureFileChooser.showDialog(owner, null);
         File selectedFile = pictureFileChooser.getSelectedFile();
