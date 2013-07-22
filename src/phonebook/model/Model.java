@@ -68,6 +68,15 @@ abstract public class Model<T> {
 		}
 		return result;
 	}
+    
+    public int getCountWhere(String field, int id) {
+		SelectQuery sql = new SelectQuery()
+				.addColumn("count(*) as count")
+				.addFrom(name)
+                .addWhere(field + " = " + id);
+		Object cell = SqlUtils.getCell(sql);
+		return Integer.parseInt(cell.toString());
+    }
 
 	public int getCount() {
 		SelectQuery sql = new SelectQuery()
