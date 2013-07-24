@@ -19,7 +19,6 @@ public class EntryModel extends Model<Entry> {
     @Override
     public Integer save(Entry entry) {
         Category category = entry.getCategory();
-        System.out.println("entry.getCategory xxx " + category);
         return super.save(entry);
     }
 
@@ -52,7 +51,6 @@ public class EntryModel extends Model<Entry> {
                 .set("DateUpdated", "@datetime('Now')")
                 .set("PictureID", pictureID)
                 .addWhere("EntryID = " + entity.getEntryID());
-        System.out.println("EntryModel.update: " + query);
         SqlUtils.update(query);
         SqlUtils.commit();
     }
@@ -66,13 +64,11 @@ public class EntryModel extends Model<Entry> {
 		super.delete(id);
         // Delete empty category.
         Integer CategoryID = entry.getCategoryID();
-        System.out.println("CategoryID " + CategoryID);
         if (CategoryID != null) {
             int count = getCountWhere("CategoryID", CategoryID);
             if (count == 0) {
                 categoryModel.delete(CategoryID);
             }
-            System.out.println("count " + count);
         }
         SqlUtils.commit();
     }

@@ -2,32 +2,34 @@ package phonebook.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import phonebook.Application;
 import phonebook.EntryTableModel;
 import phonebook.listener.RemoveEntryActionListener;
+import utils.StringUtils;
 
 /**
  * @author S
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    public MainFrame() {
-        initComponents();
-        postInit();
-    }
+	public MainFrame() {
+		initComponents();
+		postInit();
+	}
 
-    private void postInit() {
-        final MainFrame frame = this;
-        addEntryMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new AddEntryDialog(frame, false).setVisible(true);
-            }
-        });
-    }
+	private void postInit() {
+		final MainFrame frame = this;
+		addEntryMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddEntryDialog(frame, false).setVisible(true);
+			}
+		});
+	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
     private void initComponents() {//GEN-BEGIN:initComponents
 
         mainScrollPane = new javax.swing.JScrollPane();
@@ -54,6 +56,11 @@ public class MainFrame extends javax.swing.JFrame {
         fileMenu.setText("Файл");
 
         exitMenuItem.setText("Выход");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(exitMenuItem);
 
         mainMenuBar.add(fileMenu);
@@ -85,6 +92,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         aboutMenuItem.setText("Помощь");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(aboutMenuItem);
 
         mainMenuBar.add(helpMenu);
@@ -106,37 +118,49 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-END:initComponents
 
     private void entryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entryTableMouseClicked
-        if (evt.getClickCount() == 2) {
-            EntryTable target = (EntryTable) evt.getSource();
-            int rowID = target.getEntityId();
-            openEditWindow(rowID);
-        }
+		if (evt.getClickCount() == 2) {
+			EntryTable target = (EntryTable) evt.getSource();
+			int rowID = target.getEntityId();
+			openEditWindow(rowID);
+		}
     }//GEN-LAST:event_entryTableMouseClicked
 
     private void editEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEntryMenuItemActionPerformed
-        int rowID = ((EntryTable) entryTable).getEntityId();
-        openEditWindow(rowID);
+		int rowID = ((EntryTable) entryTable).getEntityId();
+		openEditWindow(rowID);
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
     private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed
-        new RemoveEntryActionListener().actionPerformed(evt);
+		new RemoveEntryActionListener().actionPerformed(evt);
     }//GEN-LAST:event_removeEntryMenuItemActionPerformed
 
-    private void openEditWindow(int id) {
-        new EditEntryDialog(id, this, false).setVisible(true);
-    }
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+		System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    public static void main(String args[]) {
-        Application application = Application.getInstance();
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        MainFrame frame = new MainFrame();
-        application.setMainFrame(frame);
-        frame.setVisible(true);
-    }
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+		String[] messages = {
+			"Url: rv-home.ru",
+			"Copyright: 2013."
+		};
+		JOptionPane.showMessageDialog(this, StringUtils.join(messages, "\n"), "О программе", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+	private void openEditWindow(int id) {
+		new EditEntryDialog(id, this, false).setVisible(true);
+	}
+
+	public static void main(String args[]) {
+		Application application = Application.getInstance();
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		MainFrame frame = new MainFrame();
+		application.setMainFrame(frame);
+		frame.setVisible(true);
+	}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem addEntryMenuItem;

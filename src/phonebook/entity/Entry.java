@@ -72,7 +72,6 @@ public class Entry extends Entity {
 	public void setCategory(Category selectedCategory) {
 		category = selectedCategory;
 		if (category != null) {
-			System.out.println("category.CategoryID " + category.getCategoryID());
 			setCategory(category.getCategoryID());
 		}
 	}
@@ -105,7 +104,6 @@ public class Entry extends Entity {
 
 	public Picture getPicture() {
 		if (Picture == null && PictureID != null) {
-			System.out.println("getPicture " + PictureID);
 			Picture = pictureModel.getId(PictureID);
 		}
 		return Picture;
