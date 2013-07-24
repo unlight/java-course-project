@@ -24,7 +24,6 @@ public class PictureModel extends Model<Picture> {
 		InsertQuery query = new InsertQuery(name)
 				.columns("EntryID", "File")
 				.values(entity.getEntryID(), entity.getFileValue());
-		System.out.println("PictureModel.insert: " + query);
 		return SqlUtils.insert(query);
 	}
 	
@@ -34,7 +33,6 @@ public class PictureModel extends Model<Picture> {
 				.set("EntryID", entity.getEntryID())
 				.set("File", entity.getFileValue())
 				.addWhere("PictureID = " + entity.getPictureID());
-		System.out.println("PictureModel.update: " + query);
 		SqlUtils.update(query);
 	}
 	

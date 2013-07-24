@@ -29,10 +29,7 @@ public class EntryTableModel extends AbstractTableModel {
 	}
 
 	public Entry getRow(int rowIndex) {
-//		int entryID = (int) getValueAt(rowIndex, -1);
 		Entry entry = getDataList().get(rowIndex);
-//		System.out.println("entry " + entryID + " rowIndex " + rowIndex); 
-//		entryModel.getId(rowIndex);
 		return entry;
 	}
 

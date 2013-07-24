@@ -1,17 +1,23 @@
 package phonebook.ui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import net.iharder.dnd.FileDrop;
 import phonebook.CategoryComboBox;
 import phonebook.CategoryComboBoxModel;
 import phonebook.EntryTableModel;
 import phonebook.LoremTextThread;
+import phonebook.ValidateRequiredListener;
 import phonebook.listener.FileDropListener;
 import phonebook.listener.PictureMouseClickListener;
 import phonebook.listener.RemoveEntryActionListener;
@@ -269,7 +275,26 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 		EntryModel EntryModel = new EntryModel();
-		int EntryID = EntryModel.save(getData());
+		Entry entry = getData();
+		// Validation.
+		ArrayList<JTextField> errorList = new ArrayList();
+		Color errorColor = new Color(255, 148, 148);
+		if (entry.LastName.length() == 0) {
+			errorList.add(lastNameTextField);
+			lastNameTextField.getDocument().addDocumentListener(new ValidateRequiredListener(lastNameTextField));
+		}
+		if (entry.Phone.length() == 0) {
+			errorList.add(phoneNumberTextField);
+			phoneNumberTextField.getDocument().addDocumentListener(new ValidateRequiredListener(phoneNumberTextField));
+		}
+		if (errorList.size() > 0) {
+			for (JTextField jTextField : errorList) {
+				jTextField.setBackground(errorColor);
+			}
+			errorList.get(0).requestFocus();
+			return;
+		}
+		EntryModel.save(getData());
 		EntryTable entryTable = (EntryTable) ((MainFrame) getParent()).entryTable;
 		EntryTableModel entryTableModel = entryTable.getModel();
 		if (getData() != null && getData().getEntryID() != null) {

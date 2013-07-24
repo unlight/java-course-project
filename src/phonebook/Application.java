@@ -43,7 +43,7 @@ public class Application {
 			handleException(e);
 		}
 		// Создаем/обновляем структуру базы данных.
-		Structure structure = new Structure(connection);
+		Structure structure = new Structure();
 		structure.update();
 	}
 
@@ -53,11 +53,9 @@ public class Application {
 	 * @param e [description]
 	 */
 	public static void handleException(Exception e) {
-//		System.err.println(String.format("%s: %s", e.getClass(), e.getLocalizedMessage()));
 		e.printStackTrace();
 //        Application app = getInstance();
 //        JOptionPane.showMessageDialog(null, e.toString(), e.toString(), JOptionPane.ERROR_MESSAGE);
-//		System.exit(1);
 	}
 
 	public void closeConnection() {
@@ -67,8 +65,12 @@ public class Application {
 			handleException(e);
 		}
 	}
+	
+	public static Connection staticGetConnection() throws SQLException {
+		return getInstance().getConnection();
+	}
 
-	private Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException {
 		if (connection == null) {
 			connection = DriverManager.getConnection("jdbc:sqlite:" + datafile);
 		}

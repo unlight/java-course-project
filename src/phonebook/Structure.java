@@ -2,7 +2,6 @@ package phonebook;
 
 import utils.StringUtils;
 import java.util.HashMap;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
@@ -11,13 +10,12 @@ import utils.SqlUtils;
 
 public class Structure {
 
-    private Connection connection;
     private HashMap<String, String[]> structure = new HashMap() {
         {
             put("Entry", new String[]{
                 "EntryID integer primary key autoincrement",
-                "FirstName text not null",
-                "LastName text",
+                "FirstName text",
+                "LastName text not null",
                 "Phone text not null",
                 "BirthDate text",
                 "DateInserted text not null",
@@ -35,10 +33,6 @@ public class Structure {
             });
         }
     };
-
-    public Structure(Connection connection) {
-        this.connection = connection;
-    }
 
     public ResultSet query(String sql) throws SQLException {
         ResultSet result = SqlUtils.executeQuery(sql);
@@ -106,7 +100,7 @@ public class Structure {
     }
 
     private boolean addColumn(String table, String columnDefinition) throws SQLException {
-        boolean result = connection.createStatement()
+        boolean result = Application.staticGetConnection().createStatement()
                 .execute("alter table `" + table + "` add " + columnDefinition + "");
         return result;
     }
@@ -120,6 +114,6 @@ public class Structure {
 
     private void createTable(String table) throws SQLException {
         String[] columns = structure.get(table);
-        connection.createStatement().execute("create table `" + table + "`(" + StringUtils.join(columns, ", ") + ")");
+        Application.staticGetConnection().createStatement().execute("create table `" + table + "`(" + StringUtils.join(columns, ", ") + ")");
     }
 }

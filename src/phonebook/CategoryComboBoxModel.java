@@ -63,18 +63,14 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 		if (anItem == null) {
 			anItem = 0;
 		}
-		System.out.println("setSelectedItem " + anItem.getClass() + " " + anItem + " ");
 		if (anItem instanceof Category) {
 			setSelectedItem((Category) anItem);
 		} else if (anItem instanceof Integer) {
 			Category category = categoryModel.getId((int) anItem);
-			System.out.println("category: " + category);
 			setSelectedItem(category);
 		} else if (anItem instanceof String) {
 			Category category = categoryModel.getByName(anItem.toString());
-			System.out.println("Found by name: " + category);
 			if (category == null && anItem.toString().length() > 0) {
-				System.out.println("Creating cate: " + anItem.toString());
 				category = categoryModel.create(anItem.toString());
 				dataList = null;
 			}
