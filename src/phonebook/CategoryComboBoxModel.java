@@ -1,18 +1,16 @@
 package phonebook;
 
 import java.security.InvalidParameterException;
-import java.util.Collection;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import phonebook.entity.Category;
 import phonebook.model.CategoryModel;
 
 /**
  * @author S
  */
-public class CategoryComboBoxModel extends AbstractListModel<Category> implements ComboBoxModel<Category> {
+public class CategoryComboBoxModel extends AbstractListModel implements ComboBoxModel {
 
 	private CategoryModel categoryModel = new CategoryModel();
 	private List<Category> dataList;
@@ -66,7 +64,7 @@ public class CategoryComboBoxModel extends AbstractListModel<Category> implement
 		if (anItem instanceof Category) {
 			setSelectedItem((Category) anItem);
 		} else if (anItem instanceof Integer) {
-			Category category = categoryModel.getId((int) anItem);
+			Category category = categoryModel.getId((Integer) anItem);
 			setSelectedItem(category);
 		} else if (anItem instanceof String) {
 			Category category = categoryModel.getByName(anItem.toString());

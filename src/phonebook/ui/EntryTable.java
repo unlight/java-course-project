@@ -20,9 +20,10 @@ public class EntryTable extends JTable {
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		TableColumn column = getColumnModel().getColumn(0);
-		removeColumn(column);
-		
-//		setAutoCreateRowSorter(true);
+		//removeColumn(column);
+//        convertColumnIndexToModel(editingColumn);
+//        getColumnModel().removeColumn(column);
+		setAutoCreateRowSorter(true);
 		//		EntryTableRowSorter entryTableRowSorter = new EntryTableRowSorter(entryTableModel);
 		//		entryTableRowSorter.setComparator(3, new ColumnSorter());
 		//		setRowSorter(entryTableRowSorter);
@@ -31,7 +32,17 @@ public class EntryTable extends JTable {
 
     public Entry getEntity() {
         int rowId = getSelectedRow();
-        return ((EntryTableModel) getModel()).getRow(rowId);
+		
+        System.out.println("getSelectedRow: " + rowId);
+        int convertRowIndexToModel = ((EntryTable) this).convertRowIndexToModel(rowId);
+        System.out.println("convertRowIndexToModel: " + convertRowIndexToModel);
+
+        rowId = convertRowIndexToModel;
+        
+        Entry entry = ((EntryTableModel) getModel()).getRow(rowId);
+        System.out.println("getEntity.entry: " + entry.getEntryID());
+       
+        return entry;
     }
 
     public int getEntityId() {

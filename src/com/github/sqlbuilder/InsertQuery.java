@@ -40,7 +40,7 @@ public class InsertQuery {
     }
 
     public InsertQuery values(Object... values) {
-        List<Object> objectList = new ArrayList<>(Arrays.asList(values));
+        List<Object> objectList = new ArrayList<Object>(Arrays.asList(values));
         this.values.add(objectList);
         return this;
     }

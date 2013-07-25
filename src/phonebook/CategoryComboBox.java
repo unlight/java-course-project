@@ -7,10 +7,10 @@ import phonebook.entity.Category;
 /**
  * @author S
  */
-public class CategoryComboBox extends JComboBox<Category> {
+public class CategoryComboBox extends JComboBox {
 
 	@Override
-	public ComboBoxModel<Category> getModel() {
+	public ComboBoxModel getModel() {
 		return super.getModel();
 	}
 
@@ -19,7 +19,6 @@ public class CategoryComboBox extends JComboBox<Category> {
 		super.setSelectedItem(anObject);
 	}
 
-	@Override
 	public void addItem(Category item) {
 		super.addItem(item);
 	}
