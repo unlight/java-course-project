@@ -25,7 +25,7 @@ public class TestDataActionListenerImpl implements ActionListener {
 		new LoremTextThread(frame.firstNameTextField).run();
 		frame.birthDateField.setValue(StringUtils.randomDate());
 		frame.phoneNumberTextField.setText(StringUtils.randomPhone());
-		((JButton) e.getSource()).setEnabled(false);
+		// ((JButton) e.getSource()).setEnabled(false);
 
 	}
 }

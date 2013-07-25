@@ -43,7 +43,6 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		cancelButton.addActionListener(new CancelActionListenerImpl(this));
 		removeButton.addActionListener(new RemoveEntryActionListener(this));
 		saveButton.addActionListener(new SaveEntryActionListenerImpl(this));
-		System.out.println(saveButton);
 	}
 
 	protected void setData(Entry entry) {

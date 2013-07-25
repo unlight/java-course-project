@@ -75,10 +75,6 @@ public class EntryTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Entry entry = (Entry) getDataList().get(rowIndex);
-        
-//        System.out.println("rowIndex: " + rowIndex);
-//        System.out.println("entryID: " + entry.getEntryID());
-        
 		String name = columnKeys[columnIndex];
 		return entry.getProperty(name);
 	}
