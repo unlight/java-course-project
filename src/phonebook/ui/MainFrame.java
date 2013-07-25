@@ -127,7 +127,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void editEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEntryMenuItemActionPerformed
 		int rowID = ((EntryTable) entryTable).getEntityId();
-		openEditWindow(rowID);
+//        int selectedRow = ((EntryTable) entryTable).getSelectedRow();
+        openEditWindow(rowID);
     }//GEN-LAST:event_editEntryMenuItemActionPerformed
 
     private void removeEntryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryMenuItemActionPerformed

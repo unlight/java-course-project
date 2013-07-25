@@ -32,7 +32,8 @@ public class PicturePanel extends JPanel {
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			} catch (IOException ex) {
 				owner.setPicture(null);
-				Application.handleException(ex);
+                System.err.println(ex.getMessage());
+//				Application.handleException(ex);
 			}
 			setBorder(new LineBorder(Color.GRAY));
 		}

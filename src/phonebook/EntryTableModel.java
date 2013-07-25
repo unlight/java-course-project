@@ -36,7 +36,7 @@ public class EntryTableModel extends AbstractTableModel {
 	@Override
 	public void fireTableChanged(TableModelEvent e) {
 		dataList = null;
-		super.fireTableChanged(e); //To change body of generated methods, choose Tools | Templates.
+		super.fireTableChanged(e);
 	}
 
 	public List<Entry> getDataList() {
@@ -75,6 +75,10 @@ public class EntryTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Entry entry = (Entry) getDataList().get(rowIndex);
+        
+//        System.out.println("rowIndex: " + rowIndex);
+//        System.out.println("entryID: " + entry.getEntryID());
+        
 		String name = columnKeys[columnIndex];
 		return entry.getProperty(name);
 	}
