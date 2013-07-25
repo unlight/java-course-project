@@ -2,6 +2,10 @@ package phonebook.model;
 
 import com.github.sqlbuilder.InsertQuery;
 import com.github.sqlbuilder.UpdateQuery;
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.JTextField;
+import phonebook.ValidateRequiredListener;
 import phonebook.entity.Category;
 import phonebook.entity.Entry;
 import phonebook.entity.Picture;
@@ -18,11 +22,10 @@ public class EntryModel extends Model<Entry> {
 
     @Override
     public Integer save(Entry entry) {
-        Category category = entry.getCategory();
         return super.save(entry);
     }
 
-    @Override
+	@Override
     public Integer insert(Entry entity) {
         InsertQuery query = new InsertQuery(name)
                 .columns("FirstName", "LastName", "Phone", "BirthDate", "CategoryID", "DateInserted", "DateUpdated")

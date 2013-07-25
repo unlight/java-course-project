@@ -6,6 +6,7 @@ import phonebook.Application;
 import phonebook.ui.EntryTable;
 import phonebook.EntryTableModel;
 import phonebook.model.EntryModel;
+import phonebook.ui.AddEntryDialog;
 import phonebook.ui.MainFrame;
 
 /**
@@ -13,13 +14,27 @@ import phonebook.ui.MainFrame;
  */
 public class RemoveEntryActionListener implements ActionListener {
 
+	private AddEntryDialog entryDialog = null;
+
+	public RemoveEntryActionListener(AddEntryDialog entryDialog) {
+		this.entryDialog = entryDialog;
+	}
+
+	public RemoveEntryActionListener() {
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MainFrame frame = Application.getInstance().frame;
+		MainFrame mainFrame = Application.getInstance().frame;
 		EntryModel entryModel = new EntryModel();
-		int entityId = ((EntryTable) frame.entryTable).getEntityId();
+		int entityId = ((EntryTable) mainFrame.entryTable).getEntityId();
 		entryModel.delete(entityId);
-		int tableRowId = frame.entryTable.getSelectedRow();
-		((EntryTableModel) frame.entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+		int tableRowId = mainFrame.entryTable.getSelectedRow();
+		((EntryTableModel) mainFrame.entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+
+		if (entryDialog != null) {
+			entryDialog.dispose();
+		}
+
 	}
 }

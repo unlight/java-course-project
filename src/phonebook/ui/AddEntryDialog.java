@@ -1,27 +1,21 @@
 package phonebook.ui;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JTextField;
 import net.iharder.dnd.FileDrop;
 import phonebook.CategoryComboBox;
 import phonebook.CategoryComboBoxModel;
-import phonebook.EntryTableModel;
-import phonebook.LoremTextThread;
-import phonebook.ValidateRequiredListener;
 import phonebook.listener.FileDropListener;
 import phonebook.listener.PictureMouseClickListener;
 import phonebook.listener.RemoveEntryActionListener;
 import phonebook.entity.Date;
 import phonebook.entity.Entry;
 import phonebook.entity.Picture;
-import phonebook.model.EntryModel;
-import utils.StringUtils;
+import phonebook.listener.CancelActionListenerImpl;
+import phonebook.listener.SaveEntryActionListenerImpl;
+import phonebook.listener.TestDataActionListenerImpl;
 
 /**
  * @author S
@@ -39,6 +33,19 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		postInit();
 	}
 
+	private void postInit() {
+		pictureMouseClickListener = new PictureMouseClickListener(this);
+		picturePanel.addMouseListener(pictureMouseClickListener);
+		new FileDrop(picturePanel, new FileDropListener(this));
+		categoryComboBoxModel = new CategoryComboBoxModel();
+		categoryComboBox.setModel(categoryComboBoxModel);
+		testDataButton.addActionListener(new TestDataActionListenerImpl(this));
+		cancelButton.addActionListener(new CancelActionListenerImpl(this));
+		removeButton.addActionListener(new RemoveEntryActionListener(this));
+		saveButton.addActionListener(new SaveEntryActionListenerImpl(this));
+		System.out.println(saveButton);
+	}
+
 	protected void setData(Entry entry) {
 		data = entry;
 		lastNameTextField.setText(data.getLastName());
@@ -49,7 +56,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		setPicture(data.getPicture());
 	}
 
-	protected Entry getData() {
+	public Entry getData() {
 		if (data == null) {
 			data = new Entry();
 		}
@@ -97,17 +104,9 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		picturePanel.updateUI();
 	}
 
-	private void postInit() {
-		pictureMouseClickListener = new PictureMouseClickListener(this);
-		picturePanel.addMouseListener(pictureMouseClickListener);
-		new FileDrop(picturePanel, new FileDropListener(this));
-		categoryComboBoxModel = new CategoryComboBoxModel();
-		categoryComboBox.setModel(categoryComboBoxModel);
-//		birthDateField.setBorder(BorderFactory.createCompoundBorder(birthDateField.getBorder(), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-	}
-
 	@SuppressWarnings("unchecked")
-    private void initComponents() {//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
         lastnameLabel = new javax.swing.JLabel();
         firstNameLabel = new javax.swing.JLabel();
@@ -141,18 +140,8 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         birthdateLabel.setPreferredSize(new java.awt.Dimension(90, 20));
 
         saveButton.setText("Добавить");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
 
         cancelButton.setText("Отмена");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
 
         picturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Изображение"));
         picturePanel.setForeground(new java.awt.Color(204, 204, 204));
@@ -171,11 +160,6 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         );
 
         testDataButton.setText("Lorem ipsum");
-        testDataButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testDataButtonActionPerformed(evt);
-            }
-        });
 
         categoryComboBox.setEditable(true);
 
@@ -183,11 +167,6 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         categoryLabel.setPreferredSize(new java.awt.Dimension(90, 20));
 
         removeButton.setText("Удалить");
-        removeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -267,75 +246,20 @@ public class AddEntryDialog extends JDialog implements ActionListener {
         );
 
         pack();
-    }//GEN-END:initComponents
-
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-		EntryModel EntryModel = new EntryModel();
-		Entry entry = getData();
-		// Validation.
-		ArrayList<JTextField> errorList = new ArrayList();
-		Color errorColor = new Color(255, 148, 148);
-		if (entry.LastName.length() == 0) {
-			errorList.add(lastNameTextField);
-			lastNameTextField.getDocument().addDocumentListener(new ValidateRequiredListener(lastNameTextField));
-		}
-		if (entry.Phone.length() == 0) {
-			errorList.add(phoneNumberTextField);
-			phoneNumberTextField.getDocument().addDocumentListener(new ValidateRequiredListener(phoneNumberTextField));
-		}
-		if (errorList.size() > 0) {
-			for (JTextField jTextField : errorList) {
-				jTextField.setBackground(errorColor);
-			}
-			errorList.get(0).requestFocus();
-			return;
-		}
-		
-        EntryModel.save(getData());
-        
-		EntryTable entryTable = (EntryTable) ((MainFrame) getParent()).entryTable;
-		EntryTableModel entryTableModel = entryTable.getModel();
-		if (getData() != null && getData().getEntryID() != null) {
-			int selectedRow = entryTable.getSelectedRow();
-			entryTableModel.fireTableRowsUpdated(selectedRow, selectedRow);
-		} else {
-			entryTableModel.fireTableDataChanged();
-		}
-		dispose();
-    }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-		dispose();
-//        lastNameTextField.setBackground(new Color(221, 0, 0));
-//        lastNameTextField.setBorder(new LineBorder(new Color(221, 0, 0), 2));
-//        lastNameTextField.setInputVerifier();
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
-    private void testDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testDataButtonActionPerformed
-		new LoremTextThread(lastNameTextField).run();
-		new LoremTextThread(firstNameTextField).run();
-		birthDateField.setValue(StringUtils.randomDate());
-		phoneNumberTextField.setText(StringUtils.randomPhone());
-		((JButton) evt.getSource()).setEnabled(false);
-    }//GEN-LAST:event_testDataButtonActionPerformed
-
-    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-		new RemoveEntryActionListener().actionPerformed(evt);
-		dispose();
-    }//GEN-LAST:event_removeButtonActionPerformed
+    }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private net.sf.nachocalendar.components.DateField birthDateField;
+    public net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JLabel birthdateLabel;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JComboBox categoryComboBox;
+    public javax.swing.JComboBox categoryComboBox;
     private javax.swing.JLabel categoryLabel;
     private javax.swing.JLabel firstNameLabel;
-    private javax.swing.JTextField firstNameTextField;
-    private javax.swing.JTextField lastNameTextField;
+    public javax.swing.JTextField firstNameTextField;
+    public javax.swing.JTextField lastNameTextField;
     private javax.swing.JLabel lastnameLabel;
     private javax.swing.JLabel phoneLabel;
-    private javax.swing.JTextField phoneNumberTextField;
-    private javax.swing.JPanel picturePanel;
+    public javax.swing.JTextField phoneNumberTextField;
+    public javax.swing.JPanel picturePanel;
     private javax.swing.JButton removeButton;
     protected javax.swing.JButton saveButton;
     private javax.swing.JButton testDataButton;

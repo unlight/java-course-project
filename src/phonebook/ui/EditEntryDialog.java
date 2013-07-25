@@ -17,6 +17,10 @@ public class EditEntryDialog extends AddEntryDialog {
 		saveButton.setText("Сохранить");
 		entryModel = new EntryModel();
 	}
+	
+	public EditEntryDialog(int id) {
+		this(id, null, false);
+	}
 
 	public EditEntryDialog(int id, MainFrame aThis, boolean b) {
 		this(aThis, b);
