@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JDialog;
 import net.iharder.dnd.FileDrop;
-import phonebook.entity.Category;
 import phonebook.listener.FileDropListener;
 import phonebook.listener.PictureMouseClickListener;
 import phonebook.listener.RemoveEntryActionListener;
@@ -48,7 +47,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		firstNameTextField.setText(data.getFirstName());
 		phoneNumberTextField.setText(data.getPhone());
 		birthDateField.setValue(data.getBirthDate());
-		categoryComboBox.setSelectedItem(entry.getCategory());
+		((CategoryComboBox) categoryComboBox).setSelectedItem(entry.getCategory());
 		setPicture(data.getPicture());
 	}
 
@@ -60,7 +59,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		data.FirstName = firstNameTextField.getText();
 		data.Phone = phoneNumberTextField.getText();
 		data.BirthDate = new Date((java.util.Date) birthDateField.getValue());
-		data.setCategory((Category) categoryComboBox.getModel().getSelectedItem());
+		data.setCategory(((CategoryComboBoxModel) categoryComboBox.getModel()).getSelectedCategory());
 		data.setPicture(getPicture());
 		return data;
 	}

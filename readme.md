@@ -4,8 +4,6 @@ ABOUT
 
 TODO
 ----
-- bug: category is not set while editing
-- bug: if nothing is selected delete throws exception
 - open edit/add dialog near parent frame
 - use: java network launching protocol (jnlp) http://ru.wikipedia.org/wiki/Java_Web_Start
 - default view in descending mode
