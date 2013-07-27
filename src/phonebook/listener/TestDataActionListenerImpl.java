@@ -19,13 +19,16 @@ public class TestDataActionListenerImpl implements ActionListener {
 		this.frame = frame;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void run() {
 		new LoremTextThread(frame.lastNameTextField).run();
 		new LoremTextThread(frame.firstNameTextField).run();
 		frame.birthDateField.setValue(StringUtils.randomDate());
 		frame.phoneNumberTextField.setText(StringUtils.randomPhone());
-		// ((JButton) e.getSource()).setEnabled(false);
+	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		this.run();
+		// ((JButton) e.getSource()).setEnabled(false);
 	}
 }

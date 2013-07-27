@@ -35,10 +35,23 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		picturePanel.addMouseListener(pictureMouseClickListener);
 		new FileDrop(picturePanel, new FileDropListener(this));
 		categoryComboBox.setModel(new CategoryComboBoxModel());
-		testDataButton.addActionListener(new TestDataActionListenerImpl(this));
 		cancelButton.addActionListener(new CancelActionListenerImpl(this));
 		removeButton.addActionListener(new RemoveEntryActionListener(this));
 		saveButton.addActionListener(new SaveEntryActionListenerImpl(this));
+
+		final TestDataActionListenerImpl testDataActionListenerImpl = new TestDataActionListenerImpl(this);
+//		categoryComboBox.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent evt) {
+//				System.out.println(evt);
+//				if (evt.getClickCount() == 2) {
+//					testDataActionListenerImpl.run();
+//				}
+//			}
+//		});
+//		testDataButton.setVisible(false);
+		testDataButton.addActionListener(testDataActionListenerImpl);
+		testDataButton.setFont(getFont().deriveFont((float)(getFont().getSize() / 2)));
 	}
 
 	protected void setData(Entry entry) {
@@ -154,7 +167,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
             .addGap(0, 134, Short.MAX_VALUE)
         );
 
-        testDataButton.setText("Lorem ipsum");
+        testDataButton.setText("Fill test data");
 
         categoryComboBox.setEditable(true);
 
@@ -242,6 +255,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public net.sf.nachocalendar.components.DateField birthDateField;
     private javax.swing.JLabel birthdateLabel;

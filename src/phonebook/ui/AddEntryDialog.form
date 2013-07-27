@@ -225,7 +225,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="testDataButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Lorem ipsum"/>
+        <Property name="text" type="java.lang.String" value="Fill test data"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="categoryComboBox">
