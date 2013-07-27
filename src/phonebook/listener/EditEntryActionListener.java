@@ -14,7 +14,9 @@ public class EditEntryActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(java.awt.event.ActionEvent evt) {
 		MainFrame frame = Application.getInstance().frame;
-		int rowID = ((EntryTable) frame.entryTable).getEntityId();
-		new EditEntryDialog(rowID, frame, false).setVisible(true);
+		int rowID = ((EntryTable) frame.entryTable).getSelectedEntryId();
+		if (rowID > 0) {
+			new EditEntryDialog(rowID, frame, false).setVisible(true);
+		}
 	}
 }

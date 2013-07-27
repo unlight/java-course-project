@@ -27,23 +27,25 @@ public class EntryTable extends JTable {
 //		setFont(getFont().deriveFont((float)(getFont().getSize() + 1)));
 	}
 
-	public Entry getEntity() {
-		// TODO: 
+	private Entry getSelectedEntry() {
 		int rowId = getSelectedRow();
-
-		int convertRowIndexToModel = ((EntryTable) this).convertRowIndexToModel(rowId);
-		System.out.println("convertRowIndexToModel: " + convertRowIndexToModel);
-
-		rowId = convertRowIndexToModel;
-
-		Entry entry = ((EntryTableModel) getModel()).getRow(rowId);
-		System.out.println("getEntity.entry: " + entry.getEntryID());
-
+		Entry entry = null;
+		// -1 means noting is selected.
+		if (rowId > -1) {
+			int convertRowIndexToModel = ((EntryTable) this).convertRowIndexToModel(rowId);
+			rowId = convertRowIndexToModel;
+			entry = ((EntryTableModel) getModel()).getRow(rowId);
+		}
 		return entry;
 	}
 
-	public int getEntityId() {
-		return getEntity().getEntryID();
+	public int getSelectedEntryId() {
+		Entry entry = getSelectedEntry();
+		Integer result = 0;
+		if (entry != null) {
+			result = entry.getEntryID();
+		}
+		return result;
 	}
 
 	@Override

@@ -2,12 +2,6 @@ ABOUT
 -----
 Телефонная записная книжка.
 
-QUESIONS
---------
-- Данные окон не очищаются после dispose()
-- PicturePanel.paintComponent() почему постоянно вызывается paint() здесь.
-- Как нарисовать схему классов
-
 TODO
 ----
 - bug: category is not set while editing

@@ -27,13 +27,15 @@ public class RemoveEntryActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		MainFrame mainFrame = Application.getInstance().frame;
 		EntryModel entryModel = new EntryModel();
-		int entityId = ((EntryTable) mainFrame.entryTable).getEntityId();
-		entryModel.delete(entityId);
-		int tableRowId = mainFrame.entryTable.getSelectedRow();
-		((EntryTableModel) mainFrame.entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
+		int entityId = ((EntryTable) mainFrame.entryTable).getSelectedEntryId();
+		if (entityId > 0) {
+			entryModel.delete(entityId);
+			int tableRowId = mainFrame.entryTable.getSelectedRow();
+			((EntryTableModel) mainFrame.entryTable.getModel()).fireTableRowsDeleted(tableRowId, tableRowId);
 
-		if (entryDialog != null) {
-			entryDialog.dispose();
+			if (entryDialog != null) {
+				entryDialog.dispose();
+			}
 		}
 
 	}

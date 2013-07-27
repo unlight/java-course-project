@@ -15,8 +15,10 @@ public class EntryTableMouseClickListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent evt) {
 		if (evt.getClickCount() == 2) {
 			EntryTable target = (EntryTable) evt.getSource();
-			int rowID = target.getEntityId();
-			new EditEntryDialog(rowID).setVisible(true);
+			int rowID = target.getSelectedEntryId();
+			if (rowID > 0) {
+				new EditEntryDialog(rowID).setVisible(true);
+			}
 		}
 	}
 }
