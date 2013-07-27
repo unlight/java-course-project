@@ -21,7 +21,15 @@ public class Category extends Entity {
 			Application.handleException(ex);
 		}
 	}
-	
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (obj instanceof Category) {
+//			return CategoryID == ((Category) obj).getCategoryID();
+//		}
+//		return super.equals(obj);
+//	}
+
 	@Override
 	public String toString() {
 		return getName();

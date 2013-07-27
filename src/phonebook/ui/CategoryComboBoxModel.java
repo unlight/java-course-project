@@ -1,9 +1,10 @@
-package phonebook;
+package phonebook.ui;
 
 import java.security.InvalidParameterException;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import phonebook.entity.Category;
 import phonebook.model.CategoryModel;
 
@@ -28,9 +29,11 @@ public class CategoryComboBoxModel extends AbstractListModel implements ComboBox
 	}
 
 	@Override
-	public Category getElementAt(int index) {
+	public Object getElementAt(int index) {
 		Category category = getDataList().get(index);
-		return category;
+		System.out.println("getElementAt " + index + " " + category);
+		System.out.println("getElementAt check hash " + category.hashCode() + " vs " + selected.hashCode());
+		return category.getName();
 	}
 
 	public int getIndexOf(Object anObject) {
@@ -38,6 +41,7 @@ public class CategoryComboBoxModel extends AbstractListModel implements ComboBox
 	}
 
 	public void setSelectedItem(Category anObject) {
+		System.out.println("setSelectedItem.last " + anObject);
 		selected = anObject;
 	}
 
@@ -48,6 +52,7 @@ public class CategoryComboBoxModel extends AbstractListModel implements ComboBox
 
 	@Override
 	public Object getSelectedItem() {
+		System.out.println("getSelectedItem x " + selected + " " + getIndexOf(selected));
 		return selected;
 	}
 
@@ -58,6 +63,7 @@ public class CategoryComboBoxModel extends AbstractListModel implements ComboBox
 
 	@Override
 	public void setSelectedItem(Object anItem) {
+		System.out.println("CategoryComboBoxModel.setSelectedItem " + anItem);
 		if (anItem == null) {
 			anItem = 0;
 		}

@@ -1,4 +1,4 @@
-package phonebook;
+package phonebook.ui;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
@@ -13,13 +13,17 @@ public class CategoryComboBox extends JComboBox {
 	public ComboBoxModel getModel() {
 		return super.getModel();
 	}
-
+	
 	@Override
 	public void setSelectedItem(Object anObject) {
+		System.out.println("CategoryComboBox.setSelectedItem " + anObject);
 		super.setSelectedItem(anObject);
 	}
-
-	public void addItem(Category item) {
-		super.addItem(item);
+	
+	@Override
+	public Category getSelectedItem() {
+		Category c = (Category) super.getSelectedItem();
+		System.out.println("CategoryComboBox.getSelectedItem " + c);
+		return c;
 	}
 }

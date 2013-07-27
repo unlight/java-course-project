@@ -5,8 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JDialog;
 import net.iharder.dnd.FileDrop;
-import phonebook.CategoryComboBox;
-import phonebook.CategoryComboBoxModel;
+import phonebook.entity.Category;
 import phonebook.listener.FileDropListener;
 import phonebook.listener.PictureMouseClickListener;
 import phonebook.listener.RemoveEntryActionListener;
@@ -25,7 +24,6 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 	PictureMouseClickListener pictureMouseClickListener;
 	private Picture picture;
 	private Entry data;
-	private CategoryComboBoxModel categoryComboBoxModel;
 
 	public AddEntryDialog(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
@@ -37,8 +35,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		pictureMouseClickListener = new PictureMouseClickListener(this);
 		picturePanel.addMouseListener(pictureMouseClickListener);
 		new FileDrop(picturePanel, new FileDropListener(this));
-		categoryComboBoxModel = new CategoryComboBoxModel();
-		categoryComboBox.setModel(categoryComboBoxModel);
+		categoryComboBox.setModel(new CategoryComboBoxModel());
 		testDataButton.addActionListener(new TestDataActionListenerImpl(this));
 		cancelButton.addActionListener(new CancelActionListenerImpl(this));
 		removeButton.addActionListener(new RemoveEntryActionListener(this));
@@ -51,7 +48,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		firstNameTextField.setText(data.getFirstName());
 		phoneNumberTextField.setText(data.getPhone());
 		birthDateField.setValue(data.getBirthDate());
-		categoryComboBoxModel.setSelectedItem(entry.getCategoryID());
+		categoryComboBox.setSelectedItem(entry.getCategory());
 		setPicture(data.getPicture());
 	}
 
@@ -63,7 +60,7 @@ public class AddEntryDialog extends JDialog implements ActionListener {
 		data.FirstName = firstNameTextField.getText();
 		data.Phone = phoneNumberTextField.getText();
 		data.BirthDate = new Date((java.util.Date) birthDateField.getValue());
-		data.setCategory(categoryComboBoxModel.getSelectedCategory());
+		data.setCategory((Category) categoryComboBox.getModel().getSelectedItem());
 		data.setPicture(getPicture());
 		return data;
 	}
