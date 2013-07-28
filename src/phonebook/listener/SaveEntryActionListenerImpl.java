@@ -53,10 +53,10 @@ public class SaveEntryActionListenerImpl implements ActionListener {
 		Entry entry = frame.getData();
 		// Все ли нужные поля заполнены.
 		boolean isValid = validate(entry);
-		if (isValid) {
-			EntryModel.save(entry);
+		if (!isValid) {
+			return;
 		}
-
+		EntryModel.save(entry);
 		EntryTable entryTable = (EntryTable) (Application.getInstance().frame).entryTable;
 		EntryTableModel entryTableModel = entryTable.getModel();
 		if (entry != null && entry.getEntryID() != null) {

@@ -14,11 +14,11 @@ import utils.SqlUtils;
  * @author S
  */
 public class PictureModel extends Model<Picture> {
-	
+
 	public PictureModel() {
 		super("Picture");
 	}
-	
+
 	@Override
 	public Integer insert(Picture entity) {
 		InsertQuery query = new InsertQuery(name)
@@ -26,7 +26,7 @@ public class PictureModel extends Model<Picture> {
 				.values(entity.getEntryID(), entity.getFileValue());
 		return SqlUtils.insert(query);
 	}
-	
+
 	@Override
 	public void update(Picture entity) {
 		UpdateQuery query = new UpdateQuery(name)
@@ -35,36 +35,38 @@ public class PictureModel extends Model<Picture> {
 				.addWhere("PictureID = " + entity.getPictureID());
 		SqlUtils.update(query);
 	}
-	
+
 	@Override
 	public Integer save(Picture entity) {
 		saveFile(entity);
 		return super.save(entity);
 	}
-	
+
 	protected void saveFile(Picture entity) {
-		File incomingFile = entity.getIncomingFileObject();
 		Integer entryID = entity.getEntryID();
-		File newFile = new File("./pictures/" + entryID + "." + FileUtils.getExtension(incomingFile));
-		File picturesDirectory = new File(newFile.getParent());
-		if (!picturesDirectory.exists()) {
-			picturesDirectory.mkdirs();
+		File incomingFile = entity.getIncomingFileObject();
+		if (incomingFile != null) {
+			File newFile = new File("./pictures/" + entryID + "." + FileUtils.getExtension(incomingFile));
+			File picturesDirectory = new File(newFile.getParent());
+			if (!picturesDirectory.exists()) {
+				picturesDirectory.mkdirs();
+			}
+			try {
+				FileUtils.copyFile(incomingFile, newFile);
+			} catch (IOException ex) {
+				Application.handleException(ex);
+			}
+			entity.setFile(newFile);
+			entity.setIncomingFileObject(newFile);
 		}
-		try {
-			FileUtils.copyFile(incomingFile, newFile);
-		} catch (IOException ex) {
-			Application.handleException(ex);
-		}
-		entity.setFile(newFile);
-		entity.setIncomingFileObject(newFile);
 	}
-	
+
 	@Override
 	public void delete(int id) {
 		Picture p = this.getId(id);
 		delete(p);
 	}
-	
+
 	public void delete(Picture p) {
 		if (p == null) {
 			return;
