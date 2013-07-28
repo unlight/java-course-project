@@ -5,7 +5,7 @@ import com.github.sqlbuilder.UpdateQuery;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JTextField;
-import phonebook.ValidateRequiredListener;
+import phonebook.listener.ValidateRequiredListener;
 import phonebook.entity.Category;
 import phonebook.entity.Entry;
 import phonebook.entity.Picture;

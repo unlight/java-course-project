@@ -1,4 +1,4 @@
-package phonebook;
+package test;
 
 import javax.swing.JTextField;
 import utils.StringUtils;

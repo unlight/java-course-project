@@ -1,4 +1,4 @@
-package phonebook;
+package phonebook.ui;
 
 import java.util.List;
 import javax.swing.event.TableModelEvent;

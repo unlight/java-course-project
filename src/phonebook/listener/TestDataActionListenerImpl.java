@@ -3,7 +3,7 @@ package phonebook.listener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import phonebook.LoremTextThread;
+import test.LoremTextThread;
 import phonebook.ui.AddEntryDialog;
 import utils.StringUtils;
 

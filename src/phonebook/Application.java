@@ -65,7 +65,7 @@ public class Application {
 			handleException(e);
 		}
 	}
-	
+
 	public static Connection staticGetConnection() throws SQLException {
 		return getInstance().getConnection();
 	}

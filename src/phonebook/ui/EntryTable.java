@@ -5,8 +5,6 @@ import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
-import phonebook.DateCellRenderer;
-import phonebook.EntryTableModel;
 import phonebook.entity.Entry;
 
 /**

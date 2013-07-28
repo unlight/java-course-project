@@ -1,4 +1,4 @@
-package phonebook;
+package phonebook.ui;
 
 import java.awt.Component;
 import javax.swing.JTable;

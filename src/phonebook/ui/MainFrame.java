@@ -2,7 +2,6 @@ package phonebook.ui;
 
 import javax.swing.UIManager;
 import phonebook.Application;
-import phonebook.EntryTableModel;
 import phonebook.listener.*;
 
 /**

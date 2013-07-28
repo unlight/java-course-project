@@ -1,4 +1,4 @@
-package phonebook;
+package phonebook.listener;
 
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -17,6 +17,7 @@ public class ValidateRequiredListener implements DocumentListener {
 		this.textfield = textfield;
 	}
 
+	@Override
 	public void insertUpdate(DocumentEvent e) {
 		validate(e);
 	}

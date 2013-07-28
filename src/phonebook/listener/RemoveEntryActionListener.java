@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import phonebook.Application;
 import phonebook.ui.EntryTable;
-import phonebook.EntryTableModel;
+import phonebook.ui.EntryTableModel;
 import phonebook.model.EntryModel;
 import phonebook.ui.AddEntryDialog;
 import phonebook.ui.MainFrame;
